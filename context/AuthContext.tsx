@@ -50,10 +50,13 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     const logout = async () => {
         try {
             await api.post('/logout');
-            setUser(null);
-            globalThis.location.href = '/login';
         } catch (error) {
             console.error('Logout failed:', error);
+        } finally {
+            setUser(null);
+            if (typeof window !== 'undefined') {
+                window.location.href = '/login';
+            }
         }
     };
 

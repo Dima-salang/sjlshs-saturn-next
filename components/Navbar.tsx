@@ -63,7 +63,10 @@ export function Navbar() {
             </DropdownMenu>
         );
     } else {
-        authSection = (
+        // Hide standard auth buttons on the inactive page to keep focus on the status/logout
+        const isInactivePage = typeof window !== 'undefined' && window.location.pathname === '/inactive';
+        
+        authSection = !isInactivePage ? (
             <div className="flex items-center gap-2">
                 <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground hover:bg-accent/50">
                     <Link href="/login">Sign In</Link>
@@ -72,7 +75,7 @@ export function Navbar() {
                     <Link href="/register">Sign Up</Link>
                 </Button>
             </div>
-        );
+        ) : null;
     }
 
     return (
