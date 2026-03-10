@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 
 export default function Home() {
-    const { user, loading } = useAuth();
+    const { user, loading, logout } = useAuth();
 
     return (
         <div className="relative min-h-[calc(100vh-64px)] overflow-hidden flex flex-col items-center justify-center font-sans px-4 bg-background">
@@ -60,12 +60,21 @@ export default function Home() {
                     className="flex flex-col sm:flex-row gap-4"
                 >
                     {!loading && user ? (
-                        <Button asChild className="h-14 px-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg font-bold shadow-lg shadow-primary/20">
-                            <Link href="/scan">
-                                Scan QR Codes
-                                <ArrowRight className="ml-2 w-5 h-5" />
-                            </Link>
-                        </Button>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <Button asChild className="h-14 px-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg font-bold shadow-lg shadow-primary/20">
+                                <Link href="/scan">
+                                    Scan QR Codes
+                                    <ArrowRight className="ml-2 w-5 h-5" />
+                                </Link>
+                            </Button>
+                            <Button 
+                                onClick={() => logout()}
+                                variant="outline" 
+                                className="h-14 px-8 rounded-full border-destructive/20 bg-destructive/5 hover:bg-destructive hover:text-destructive-foreground text-destructive text-lg font-bold transition-all"
+                            >
+                                Logout Account
+                            </Button>
+                        </div>
                     ) : (
                         <Button asChild className="h-14 px-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-lg font-bold shadow-lg shadow-primary/20">
                             <Link href="/login">

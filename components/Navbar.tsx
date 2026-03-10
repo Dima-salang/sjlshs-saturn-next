@@ -51,6 +51,14 @@ export function Navbar() {
                         <Settings className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                         <span>Settings</span>
                     </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-border" />
+                    <DropdownMenuItem 
+                        onClick={() => logout()}
+                        className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer group"
+                    >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         );
