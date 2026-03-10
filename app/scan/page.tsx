@@ -114,7 +114,7 @@ export default function QRScannerPage() {
     }, []);
 
     return (
-        <div className="relative min-h-[calc(100vh-64px)] bg-[#050508] text-zinc-100 flex flex-col items-center justify-center overflow-hidden font-sans p-4">
+        <div className="relative min-h-[calc(100vh-64px)] bg-background text-foreground flex flex-col items-center justify-center overflow-hidden font-sans p-4">
             {/* Background Atmosphere */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-0 left-1/4 w-[50%] h-[50%] bg-blue-500/5 blur-[120px] rounded-full" />
@@ -127,23 +127,23 @@ export default function QRScannerPage() {
                 className="relative z-10 w-full max-w-xl"
             >
                 <div className="flex flex-col items-center mb-8 text-center">
-                    <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500 mb-2">
+                    <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60 mb-2">
                         Student Scanner
                     </h1>
-                    <p className="text-zinc-500 text-sm">
+                    <p className="text-muted-foreground text-sm">
                         Scan the student's QR code to record attendance.
                     </p>
                 </div>
 
-                <Card className="border-zinc-800 bg-zinc-900/40 backdrop-blur-xl shadow-2xl overflow-hidden rounded-3xl">
-                    <CardHeader className="border-b border-zinc-800/50 py-4 px-6 flex flex-row items-center justify-between space-y-0">
+                <Card className="border-border bg-card/40 backdrop-blur-xl shadow-2xl overflow-hidden rounded-3xl">
+                    <CardHeader className="border-b border-border/50 py-4 px-6 flex flex-row items-center justify-between space-y-0">
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
                                 <div className={cn(
                                     "w-2 h-2 rounded-full",
-                                    status === 'scanning' ? "bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" : "bg-zinc-700"
+                                    status === 'scanning' ? "bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.5)]" : "bg-muted-foreground/30"
                                 )} />
-                                <span className="text-xs font-medium text-zinc-400 capitalize">
+                                <span className="text-xs font-medium text-muted-foreground capitalize">
                                     {status}
                                 </span>
                             </div>
@@ -154,8 +154,8 @@ export default function QRScannerPage() {
                                 className={cn(
                                     "flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all border",
                                     isLate 
-                                        ? "bg-amber-500/10 border-amber-500/50 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" 
-                                        : "bg-zinc-800/50 border-zinc-700 text-zinc-500 hover:text-zinc-400"
+                                        ? "bg-amber-500/10 border-amber-500/50 text-amber-600 dark:text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" 
+                                        : "bg-muted border-border text-muted-foreground hover:bg-muted/80"
                                 )}
                             >
                                 <Clock className={cn("w-3 h-3", isLate && "animate-pulse")} />
@@ -166,7 +166,7 @@ export default function QRScannerPage() {
                         {status === 'scanning' && (
                             <span className={cn(
                                 "text-[10px] uppercase tracking-widest font-bold flex items-center gap-1.5 transition-colors",
-                                isLate ? "text-amber-500" : "text-blue-500/70"
+                                isLate ? "text-amber-600 dark:text-amber-500" : "text-blue-600/70 dark:text-blue-500/70"
                             )}>
                                 <Scan className="w-3 h-3" />
                                 {isLate ? "Scanning Lates" : "Ready to Scan"}
@@ -179,7 +179,7 @@ export default function QRScannerPage() {
                             {status === 'idle' && (
                                 <Button 
                                     onClick={startScanner}
-                                    className="bg-white text-black hover:bg-zinc-200 h-14 px-8 rounded-2xl text-base font-bold shadow-2xl shadow-white/5 active:scale-95 transition-all"
+                                    className="bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 rounded-2xl text-base font-bold shadow-2xl active:scale-95 transition-all"
                                 >
                                     <Camera className="w-5 h-5 mr-3" />
                                     Start Camera
@@ -228,12 +228,12 @@ export default function QRScannerPage() {
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="absolute inset-0 z-20 bg-[#050508]/90 backdrop-blur-xl flex flex-col items-center justify-center p-8 text-center"
+                                        className="absolute inset-0 z-20 bg-background/90 backdrop-blur-xl flex flex-col items-center justify-center p-8 text-center"
                                     >
                                         {status === 'processing' && (
                                             <div className="flex flex-col items-center gap-4">
-                                                <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
-                                                <p className="text-zinc-400 font-medium tracking-wide">Recording attendance...</p>
+                                                <Loader2 className="w-12 h-12 text-primary animate-spin" />
+                                                <p className="text-muted-foreground font-medium tracking-wide text-lg">Recording attendance...</p>
                                             </div>
                                         )}
 
@@ -244,16 +244,16 @@ export default function QRScannerPage() {
                                                 className="flex flex-col items-center"
                                             >
                                                 <div className="w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.1)]">
-                                                    <CheckCircle2 className="w-10 h-10 text-green-500" />
+                                                    <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-500" />
                                                 </div>
-                                                <h3 className="text-2xl font-bold text-white mb-2">Check-in Successful</h3>
-                                                <p className="text-zinc-500 mb-8">{message}</p>
+                                                <h3 className="text-2xl font-bold text-foreground mb-2">Check-in Successful</h3>
+                                                <p className="text-muted-foreground mb-8 text-lg">{message}</p>
                                                 <Button 
                                                     onClick={resetScanner}
-                                                    className="bg-zinc-100 text-black hover:bg-white rounded-2xl px-8 h-12 font-bold transition-all group"
+                                                    className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl px-10 h-14 text-base font-bold transition-all group shadow-lg shadow-primary/20"
                                                 >
                                                     Next Student
-                                                    <span className="ml-2 text-[10px] text-zinc-400 group-hover:text-zinc-600 transition-colors animate-pulse">(Auto in 2s)</span>
+                                                    <span className="ml-2 text-[10px] opacity-70 group-hover:opacity-100 transition-opacity animate-pulse">(Auto in 2s)</span>
                                                 </Button>
                                             </motion.div>
                                         )}
@@ -265,17 +265,17 @@ export default function QRScannerPage() {
                                                 className="flex flex-col items-center"
                                             >
                                                 <div className="w-20 h-20 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-6">
-                                                    <AlertCircle className="w-10 h-10 text-red-500" />
+                                                    <AlertCircle className="w-10 h-10 text-red-600 dark:text-red-500" />
                                                 </div>
-                                                <h3 className="text-2xl font-bold text-white mb-2">Scan Error</h3>
-                                                <p className="text-zinc-500 mb-8 max-w-[280px] break-words">{message}</p>
+                                                <h3 className="text-2xl font-bold text-foreground mb-2">Scan Error</h3>
+                                                <p className="text-muted-foreground mb-8 max-w-[280px] break-words text-lg">{message}</p>
                                                 <Button 
                                                     onClick={resetScanner}
                                                     variant="outline"
-                                                    className="border-zinc-800 text-zinc-300 hover:bg-zinc-800 rounded-2xl px-8 h-12 font-bold transition-all"
+                                                    className="border-border text-foreground hover:bg-accent rounded-2xl px-10 h-14 font-bold transition-all"
                                                 >
                                                     Try Again
-                                                    <span className="ml-2 text-[10px] text-zinc-500 animate-pulse">(Auto in 4s)</span>
+                                                    <span className="ml-2 text-[10px] text-muted-foreground animate-pulse">(Auto in 4s)</span>
                                                 </Button>
                                             </motion.div>
                                         )}
@@ -285,8 +285,8 @@ export default function QRScannerPage() {
                         </div>
                     </CardContent>
                     
-                    <div className="px-6 py-4 bg-zinc-900/50 flex items-center justify-center border-t border-zinc-800/50">
-                        <Link href="/" className="text-xs text-zinc-600 hover:text-zinc-400 flex items-center gap-2 transition-colors">
+                    <div className="px-6 py-4 bg-muted/30 flex items-center justify-center border-t border-border/50">
+                        <Link href="/" className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors">
                             <ArrowLeft className="w-3 h-3" />
                             Return to Dashboard
                         </Link>

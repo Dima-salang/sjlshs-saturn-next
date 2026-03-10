@@ -17,8 +17,8 @@ export function ProtectedRoute({ children }: Readonly<{ children: React.ReactNod
     useEffect(() => {
         if (!loading) {
             if (!user) {
-                // Not logged in -> Home
-                router.push('/');
+                // Not logged in -> Login page
+                router.push('/login');
             } else if (!user.is_active && pathname !== '/inactive') {
                 // Logged in but inactive -> Inactive page
                 router.push('/inactive');
@@ -28,8 +28,8 @@ export function ProtectedRoute({ children }: Readonly<{ children: React.ReactNod
 
     if (loading) {
         return (
-            <div className="flex h-screen w-full items-center justify-center bg-[#050508]">
-                <div className="h-8 w-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
+            <div className="flex h-screen w-full items-center justify-center bg-background">
+                <div className="h-8 w-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
             </div>
         );
     }

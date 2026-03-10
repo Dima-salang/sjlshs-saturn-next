@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { Navbar } from "@/components/Navbar";
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Saturn OS | Orbital Management",
-  description: "Next-generation attendance and school management system.",
+  title: "Saturn OS | School Management",
+  description: "Modern attendance and school management system.",
 };
 
 export default function RootLayout({
@@ -26,17 +27,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050508] text-zinc-100 min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-screen`}
       >
-        <AuthProvider>
-          <Navbar />
-          <main className="pt-16">
-            {children}
-          </main>
-          <Toaster theme="dark" position="top-center" expand={false} richColors />
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <Navbar />
+            <main className="pt-16">
+              {children}
+            </main>
+            <Toaster theme="system" position="top-center" expand={false} richColors />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

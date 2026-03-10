@@ -33,12 +33,11 @@ export default function InactiveAccountPage() {
     }
 
     return (
-        <div className="relative flex h-[calc(100vh-4rem)] w-full flex-col items-center justify-center overflow-hidden bg-[#050508]">
+        <div className="relative flex h-[calc(100vh-4rem)] w-full flex-col items-center justify-center overflow-hidden bg-background">
             {/* Background Atmosphere */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute -left-[10%] -top-[10%] h-[50vh] w-[50vh] rounded-full bg-red-900/10 blur-[100px]" />
-                <div className="absolute -right-[10%] -bottom-[10%] h-[60vh] w-[60vh] rounded-full bg-orange-900/10 blur-[120px]" />
-                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay" />
+                <div className="absolute -left-[10%] -top-[10%] h-[50vh] w-[50vh] rounded-full bg-red-500/5 dark:bg-red-900/10 blur-[100px]" />
+                <div className="absolute -right-[10%] -bottom-[10%] h-[60vh] w-[60vh] rounded-full bg-orange-500/5 dark:bg-orange-900/10 blur-[120px]" />
             </div>
 
             <motion.div 
@@ -47,10 +46,10 @@ export default function InactiveAccountPage() {
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="z-10 w-full max-w-md px-6"
             >
-                <div className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/50 p-8 pt-10 backdrop-blur-xl shadow-2xl shadow-red-900/10">
+                <div className="relative overflow-hidden rounded-3xl border border-border bg-card/50 p-8 pt-10 backdrop-blur-xl shadow-2xl shadow-red-500/5 dark:shadow-red-900/10">
                     
                     {/* Glowing corner indicator */}
-                    <div className="absolute -top-12 -right-12 h-24 w-24 rounded-full bg-red-500/20 blur-xl" />
+                    <div className="absolute -top-12 -right-12 h-24 w-24 rounded-full bg-red-500/10 dark:bg-red-500/20 blur-xl" />
 
                     <div className="mb-6 flex justify-center">
                         <div className="relative">
@@ -60,7 +59,7 @@ export default function InactiveAccountPage() {
                                 transition={{ duration: 1, ease: 'easeOut' }}
                                 className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-b from-red-500/10 to-transparent border border-red-500/20 shadow-inner shadow-red-500/10"
                             >
-                                <ShieldAlert className="h-10 w-10 text-red-500" strokeWidth={1.5} />
+                                <ShieldAlert className="h-10 w-10 text-red-600 dark:text-red-500" strokeWidth={1.5} />
                             </motion.div>
                             <motion.div
                                 animate={{ opacity: [0.3, 0.8, 0.3] }}
@@ -75,7 +74,7 @@ export default function InactiveAccountPage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.2 }}
-                            className="font-mono text-2xl tracking-tighter text-zinc-100"
+                            className="font-mono text-2xl tracking-tighter text-foreground"
                         >
                             ACCOUNT PENDING
                         </motion.h1>
@@ -83,7 +82,7 @@ export default function InactiveAccountPage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}
-                            className="text-sm font-medium text-zinc-400 leading-relaxed"
+                            className="text-sm font-medium text-muted-foreground leading-relaxed"
                         >
                             Your account is currently inactive. You must contact a system administrator to verify your credentials and activate your access.
                         </motion.p>
@@ -93,14 +92,14 @@ export default function InactiveAccountPage() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="mb-8 overflow-hidden rounded-xl border border-orange-500/20 bg-orange-500/10 p-4 relative"
+                        className="mb-8 overflow-hidden rounded-xl border border-orange-500/20 bg-orange-500/5 dark:bg-orange-500/10 p-4 relative"
                     >
                         <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-400 to-red-600" />
                         <div className="flex items-start gap-3 pl-2">
-                            <Clock className="mt-0.5 h-5 w-5 text-orange-400 shrink-0" />
+                            <Clock className="mt-0.5 h-5 w-5 text-orange-600 dark:text-orange-400 shrink-0" />
                             <div className="flex flex-col gap-1">
-                                <span className="text-sm font-semibold tracking-tight text-orange-300">Awaiting Activation</span>
-                                <span className="text-xs text-orange-200/70">
+                                <span className="text-sm font-semibold tracking-tight text-orange-700 dark:text-orange-300">Awaiting Activation</span>
+                                <span className="text-xs text-orange-950/60 dark:text-orange-200/70 leading-relaxed">
                                     You created an account as <strong>{user?.name}</strong>. An administrator must check your account before you can use the app.
                                 </span>
                             </div>
@@ -115,12 +114,10 @@ export default function InactiveAccountPage() {
                     >
                         <Button
                             onClick={() => logout()}
-                            className="group relative w-full overflow-hidden rounded-xl bg-white px-4 py-6 text-black transition-all hover:bg-zinc-200"
+                            className="w-full h-12 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-lg shadow-primary/20"
                         >
-                            <span className="relative z-10 flex items-center justify-center gap-2 font-semibold">
-                                <LogOut className="h-4 w-4" />
-                                End Session
-                            </span>
+                            <LogOut className="mr-2 h-4 w-4" />
+                            End Session
                         </Button>
                     </motion.div>
 
@@ -130,7 +127,7 @@ export default function InactiveAccountPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.8 }}
-                    className="mt-6 flex items-center justify-center gap-2 text-xs text-zinc-500"
+                    className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground"
                 >
                     <AlertTriangle className="h-3 w-3" />
                     <span>Saturn OS Automated Security</span>

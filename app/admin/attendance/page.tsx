@@ -177,7 +177,7 @@ export default function AttendanceAdminPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#050508] text-zinc-100 p-6 md:p-12 font-sans selection:bg-emerald-500/30">
+        <div className="min-h-screen bg-background text-foreground p-6 md:p-12 font-sans selection:bg-emerald-500/30">
             <div className="max-w-6xl mx-auto space-y-10">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -193,7 +193,7 @@ export default function AttendanceAdminPage() {
                         <motion.h1 
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-5xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-600"
+                            className="text-5xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
                         >
                             Daily Attendance
                         </motion.h1>
@@ -201,7 +201,7 @@ export default function AttendanceAdminPage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.1 }}
-                            className="text-zinc-500 max-w-lg leading-relaxed text-sm"
+                            className="text-muted-foreground max-w-lg leading-relaxed text-sm"
                         >
                             Monitor student attendance and track daily arrivals.
                         </motion.p>
@@ -217,13 +217,13 @@ export default function AttendanceAdminPage() {
                             size="icon" 
                             onClick={fetchData}
                             disabled={loading}
-                            className="rounded-2xl border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-400 h-12 w-12"
+                            className="rounded-2xl border-border bg-muted/50 hover:bg-muted text-muted-foreground h-12 w-12"
                         >
                             <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
                         </Button>
                         <Button 
                             onClick={() => setIsCreating(true)}
-                            className="rounded-2xl bg-emerald-500 text-black hover:bg-emerald-400 font-bold px-8 h-12 shadow-[0_0_30px_rgba(16,185,129,0.2)] border-none"
+                            className="rounded-2xl bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black hover:bg-emerald-500 dark:hover:bg-emerald-400 font-bold px-8 h-12 shadow-lg shadow-emerald-500/20"
                         >
                             <Plus className="w-4 h-4 mr-2" />
                             Manual Entry
@@ -244,17 +244,17 @@ export default function AttendanceAdminPage() {
                         { label: 'Late', value: stats.late, icon: Clock, color: 'amber' },
                         { label: 'Absent', value: stats.absent, icon: UserMinus, color: 'rose' },
                     ].map((stat, i) => (
-                        <div key={i} className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-3xl backdrop-blur-xl relative overflow-hidden group">
+                        <div key={i} className="bg-muted/40 border border-border/50 p-6 rounded-3xl backdrop-blur-xl relative overflow-hidden group">
                             <div className={`absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity`}>
                                 <stat.icon className="w-16 h-16" />
                             </div>
-                            <div className="text-zinc-500 text-[10px] uppercase font-black tracking-widest mb-2">{stat.label}</div>
-                            <div className="text-3xl font-black text-white leading-none">{stat.value}</div>
+                            <div className="text-muted-foreground text-[10px] uppercase font-black tracking-widest mb-2">{stat.label}</div>
+                            <div className="text-3xl font-black text-foreground leading-none">{stat.value}</div>
                             <div className={cn("mt-4 h-1 w-8 rounded-full", {
                                 'bg-emerald-500': stat.color === 'emerald',
                                 'bg-amber-500': stat.color === 'amber',
                                 'bg-rose-500': stat.color === 'rose',
-                                'bg-zinc-700': stat.color === 'zinc',
+                                'bg-muted-foreground/30': stat.color === 'zinc',
                             })} />
                         </div>
                     ))}
@@ -263,26 +263,26 @@ export default function AttendanceAdminPage() {
                 {/* Filters & Actions */}
                 <div className="flex flex-col md:flex-row gap-4 items-center">
                     <div className="relative flex-1 group w-full">
-                        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-emerald-400 transition-colors">
+                        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-emerald-500 transition-colors">
                             <Search className="w-4 h-4" />
                         </div>
-                        <input 
+                        <Input 
                             placeholder="Search by name or LRN..." 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-4 h-14 bg-zinc-900/20 border border-zinc-800/80 focus:border-emerald-500/50 rounded-2xl transition-all outline-none text-zinc-200 text-sm backdrop-blur-sm"
+                            className="w-full pl-12 h-14 bg-muted/20 border-border/80 focus:border-emerald-500/50 rounded-2xl transition-all"
                         />
                     </div>
                     
                     <div className="flex items-center gap-3 w-full md:w-auto">
                         <Select value={sectionFilter} onValueChange={setSectionFilter}>
-                            <SelectTrigger className="w-full md:w-48 h-14 bg-zinc-900/20 border-zinc-800/80 rounded-2xl text-zinc-300">
+                            <SelectTrigger className="w-full md:w-48 h-14 bg-muted/20 border-border/80 rounded-2xl text-foreground">
                                 <div className="flex items-center gap-2">
-                                    <Filter className="w-3.5 h-3.5 text-zinc-500" />
+                                    <Filter className="w-3.5 h-3.5 text-muted-foreground" />
                                     <SelectValue placeholder="All Sections" />
                                 </div>
                             </SelectTrigger>
-                            <SelectContent className="bg-zinc-950 border-zinc-800 text-zinc-100">
+                            <SelectContent className="bg-popover border-border text-popover-foreground">
                                 <SelectItem value="all">All Sections</SelectItem>
                                 {sections.map(s => (
                                     <SelectItem key={s.section_id} value={s.section_id.toString()}>
@@ -303,11 +303,11 @@ export default function AttendanceAdminPage() {
                 >
                     <Table>
                         <TableHeader>
-                            <TableRow className="border-zinc-800/50 hover:bg-transparent bg-zinc-900/60 h-16">
-                                <TableHead className="pl-8 text-zinc-400 font-bold text-[10px] uppercase tracking-widest">Time & Date</TableHead>
-                                <TableHead className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest">Student</TableHead>
-                                <TableHead className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest">Status</TableHead>
-                                <TableHead className="text-right pr-8 text-zinc-400 font-bold text-[10px] uppercase tracking-widest">Actions</TableHead>
+                            <TableRow className="border-border/50 hover:bg-transparent bg-muted/60 h-16">
+                                <TableHead className="pl-8 text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Time & Date</TableHead>
+                                <TableHead className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Student</TableHead>
+                                <TableHead className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Status</TableHead>
+                                <TableHead className="text-right pr-8 text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -339,28 +339,28 @@ export default function AttendanceAdminPage() {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0, scale: 0.98 }}
-                                            className="group border-zinc-800/30 hover:bg-white/[0.02] transition-colors h-20"
+                                            className="group border-border/30 hover:bg-muted/30 transition-colors h-20"
                                         >
                                             <TableCell className="pl-8">
                                                 <div className="flex flex-col">
-                                                    <span className="text-white font-mono text-xs">
+                                                    <span className="text-foreground font-mono text-xs font-bold">
                                                         {record.created_at ? new Date(record.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }) : '--:--:--'}
                                                     </span>
-                                                    <span className="text-[10px] text-zinc-600 font-bold uppercase tracking-tight">
+                                                    <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-tight">
                                                         {record.created_at ? new Date(record.created_at).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) : 'Unknown Date'}
                                                     </span>
                                                 </div>
                                             </TableCell>
                                             <TableCell>
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center font-black text-zinc-500 border border-zinc-700/50">
+                                                    <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center font-black text-muted-foreground border border-border/50">
                                                         {record.last_name[0]}
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className="text-white font-bold tracking-tight">
+                                                        <span className="text-foreground font-bold tracking-tight">
                                                             {record.last_name}, {record.first_name}
                                                         </span>
-                                                        <span className="text-[10px] text-zinc-500 font-mono">
+                                                        <span className="text-[10px] text-muted-foreground font-mono">
                                                             LRN: {record.lrn}
                                                         </span>
                                                     </div>
@@ -395,17 +395,17 @@ export default function AttendanceAdminPage() {
                                                             <MoreVertical className="w-4 h-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end" className="bg-zinc-950 border-zinc-800 text-zinc-300 rounded-2xl min-w-[160px] p-2">
+                                                    <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-2xl min-w-[160px] p-2">
                                                         <DropdownMenuItem 
                                                             onClick={() => setEditingRecord(record)}
-                                                            className="hover:bg-zinc-900 cursor-pointer rounded-xl h-10 gap-2 focus:bg-zinc-900 focus:text-emerald-400"
+                                                            className="cursor-pointer rounded-xl h-10 gap-2"
                                                         >
                                                             <Edit2 className="w-3.5 h-3.5" />
                                                             Edit Record
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem 
                                                             onClick={() => handleDeleteRecord(record.id)}
-                                                            className="hover:bg-rose-950/30 hover:text-rose-400 text-rose-500 cursor-pointer rounded-xl h-10 gap-2 focus:bg-rose-950/20"
+                                                            className="text-destructive cursor-pointer rounded-xl h-10 gap-2 focus:text-destructive"
                                                         >
                                                             <Trash2 className="w-3.5 h-3.5" />
                                                             Delete Record
@@ -424,42 +424,42 @@ export default function AttendanceAdminPage() {
 
             {/* Manual Entry Dialog */}
             <Dialog open={isCreating} onOpenChange={setIsCreating}>
-                <DialogContent className="bg-[#0a0a0f] border-zinc-800 text-zinc-100 max-w-md rounded-[2rem] overflow-hidden shadow-2xl border-t border-t-emerald-500/30">
-                    <DialogHeader className="pt-4">
+                <DialogContent className="bg-card border-border text-foreground max-w-md rounded-[2rem] overflow-hidden shadow-2xl border-t-2 border-t-emerald-500">
+                    <DialogHeader className="pt-4 px-6 text-center">
                         <DialogTitle className="text-2xl font-black tracking-tighter">Add Attendance</DialogTitle>
-                        <DialogDescription className="text-zinc-500 text-sm">
+                        <DialogDescription className="text-muted-foreground text-sm">
                             Manually add an attendance record for a student.
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form onSubmit={handleCreateRecord} className="space-y-6 py-6">
+                    <form onSubmit={handleCreateRecord} className="space-y-6 p-6">
                         <div className="space-y-5">
                             <div className="space-y-2">
-                                <Label className="text-[10px] uppercase font-black tracking-[0.2em] text-zinc-500">Student LRN</Label>
+                                <Label className="text-[10px] uppercase font-black tracking-[0.2em] text-muted-foreground">Student LRN</Label>
                                 <Input 
                                     required
                                     placeholder="Enter 12-digit LRN"
                                     value={newRecord.lrn}
                                     onChange={(e) => setNewRecord({...newRecord, lrn: e.target.value})}
-                                    className="h-14 bg-white/[0.03] border-zinc-800 rounded-2xl focus:border-emerald-500/50 transition-all font-mono"
+                                    className="h-14 bg-muted/30 border-border rounded-2xl focus:ring-2 focus:ring-emerald-500/20 transition-all font-mono"
                                 />
                             </div>
 
                             <div className="flex gap-4">
-                                <div className="flex-1 bg-white/[0.03] border border-zinc-800 p-4 rounded-2xl flex items-center justify-between group hover:border-amber-500/30 transition-all">
+                                <div className="flex-1 bg-muted/20 border border-border p-4 rounded-2xl flex items-center justify-between group hover:border-amber-500/30 transition-all">
                                     <div className="flex items-center gap-3">
-                                        <Clock className={cn("w-4 h-4 text-zinc-500", newRecord.is_late && "text-amber-500 animate-pulse")} />
-                                        <span className="text-xs font-bold text-zinc-300">Late Mode</span>
+                                        <Clock className={cn("w-4 h-4 text-muted-foreground", newRecord.is_late && "text-amber-600 dark:text-amber-500 animate-pulse")} />
+                                        <span className="text-xs font-bold text-muted-foreground">Late Mode</span>
                                     </div>
                                     <Switch 
                                         checked={newRecord.is_late}
                                         onCheckedChange={(val) => setNewRecord({...newRecord, is_late: val})}
                                     />
                                 </div>
-                                <div className="flex-1 bg-white/[0.03] border border-zinc-800 p-4 rounded-2xl flex items-center justify-between group hover:border-rose-500/30 transition-all">
+                                <div className="flex-1 bg-muted/20 border border-border p-4 rounded-2xl flex items-center justify-between group hover:border-rose-500/30 transition-all">
                                     <div className="flex items-center gap-3">
-                                        <UserMinus className={cn("w-4 h-4 text-zinc-500", newRecord.is_absent && "text-rose-500")} />
-                                        <span className="text-xs font-bold text-zinc-300">Absent</span>
+                                        <UserMinus className={cn("w-4 h-4 text-muted-foreground", newRecord.is_absent && "text-destructive")} />
+                                        <span className="text-xs font-bold text-muted-foreground">Absent</span>
                                     </div>
                                     <Switch 
                                         checked={newRecord.is_absent}
@@ -473,7 +473,7 @@ export default function AttendanceAdminPage() {
                             <Button 
                                 type="submit" 
                                 disabled={isSaving}
-                                className="w-full h-14 bg-white text-black hover:bg-zinc-200 font-black rounded-2xl shadow-xl transition-all"
+                                className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary/90 font-black rounded-2xl shadow-xl transition-all"
                             >
                                 {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : "Add Record"}
                             </Button>
@@ -484,24 +484,24 @@ export default function AttendanceAdminPage() {
 
             {/* Amend Record Dialog */}
             <Dialog open={!!editingRecord} onOpenChange={(open) => !open && setEditingRecord(null)}>
-                <DialogContent className="bg-[#0a0a0f] border-zinc-800 text-zinc-100 max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl border-t border-t-blue-500/30">
-                    <DialogHeader className="pt-4">
+                <DialogContent className="bg-card border-border text-foreground max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl border-t-2 border-t-blue-500">
+                    <DialogHeader className="pt-4 px-6 text-center">
                         <DialogTitle className="text-2xl font-black tracking-tighter">Edit Attendance</DialogTitle>
-                        <DialogDescription className="text-zinc-500 text-sm">
+                        <DialogDescription className="text-muted-foreground text-sm">
                             Update attendance details for {editingRecord?.first_name} {editingRecord?.last_name}.
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form onSubmit={handleUpdateRecord} className="space-y-8 py-6">
+                    <form onSubmit={handleUpdateRecord} className="space-y-8 p-6">
                         <div className="grid grid-cols-1 gap-4">
-                            <div className="bg-white/[0.03] border border-zinc-800 p-6 rounded-3xl flex items-center justify-between group hover:border-amber-500/30 transition-all">
+                            <div className="bg-muted/20 border border-border p-6 rounded-3xl flex items-center justify-between group hover:border-amber-500/30 transition-all">
                                 <div className="flex items-center gap-4">
-                                    <div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center transition-colors", editingRecord?.is_late ? "bg-amber-500/10" : "bg-zinc-900")}>
-                                        <Clock className={cn("w-5 h-5", editingRecord?.is_late ? "text-amber-500 animate-pulse" : "text-zinc-700")} />
+                                    <div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center transition-colors", editingRecord?.is_late ? "bg-amber-500/10" : "bg-muted")}>
+                                        <Clock className={cn("w-5 h-5", editingRecord?.is_late ? "text-amber-600 dark:text-amber-500 animate-pulse" : "text-muted-foreground")} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-sm font-black text-white">Late</span>
-                                        <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Mark student as late</span>
+                                        <span className="text-sm font-black text-foreground">Late</span>
+                                        <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Mark student as late</span>
                                     </div>
                                 </div>
                                 <Switch 
@@ -510,14 +510,14 @@ export default function AttendanceAdminPage() {
                                 />
                             </div>
 
-                            <div className="bg-white/[0.03] border border-zinc-800 p-6 rounded-3xl flex items-center justify-between group hover:border-rose-500/30 transition-all">
+                            <div className="bg-muted/20 border border-border p-6 rounded-3xl flex items-center justify-between group hover:border-rose-500/30 transition-all">
                                 <div className="flex items-center gap-4">
-                                    <div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center transition-colors", editingRecord?.is_absent ? "bg-rose-500/10" : "bg-zinc-900")}>
-                                        <UserMinus className={cn("w-5 h-5", editingRecord?.is_absent ? "text-rose-500" : "text-zinc-700")} />
+                                    <div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center transition-colors", editingRecord?.is_absent ? "bg-rose-500/10" : "bg-muted")}>
+                                        <UserMinus className={cn("w-5 h-5", editingRecord?.is_absent ? "text-destructive" : "text-muted-foreground")} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-sm font-black text-white">Absent</span>
-                                        <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Mark student as absent</span>
+                                        <span className="text-sm font-black text-foreground">Absent</span>
+                                        <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Mark student as absent</span>
                                     </div>
                                 </div>
                                 <Switch 
@@ -531,7 +531,7 @@ export default function AttendanceAdminPage() {
                             <Button 
                                 type="submit" 
                                 disabled={isSaving}
-                                className="w-full h-16 bg-white text-black hover:bg-zinc-200 font-black rounded-3xl shadow-xl transition-all gap-3"
+                                className="w-full h-16 bg-primary text-primary-foreground hover:bg-primary/90 font-black rounded-3xl shadow-xl transition-all gap-3"
                             >
                                 {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Save className="w-4 h-4" /> Save Changes</>}
                             </Button>

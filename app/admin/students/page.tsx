@@ -245,7 +245,7 @@ export default function StudentsPage() {
     );
 
     return (
-        <div className="min-h-screen bg-[#050508] text-zinc-100 p-6 md:p-12 font-sans overflow-x-hidden">
+        <div className="min-h-screen bg-background text-foreground p-6 md:p-12 font-sans overflow-x-hidden">
             <div className="max-w-7xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -261,7 +261,7 @@ export default function StudentsPage() {
                         <motion.h1 
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-4xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500"
+                            className="text-4xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
                         >
                             Manage Students
                         </motion.h1>
@@ -269,7 +269,7 @@ export default function StudentsPage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.1 }}
-                            className="text-zinc-500 max-w-lg"
+                            className="text-muted-foreground max-w-lg"
                         >
                             Manage student records, assign sections, and import data.
                         </motion.p>
@@ -285,21 +285,21 @@ export default function StudentsPage() {
                             size="icon" 
                             onClick={fetchData}
                             disabled={loading}
-                            className="rounded-full border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-400"
+                            className="rounded-full border-border bg-muted/50 hover:bg-muted text-muted-foreground"
                         >
                             <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
                         </Button>
                         <Button 
                             variant="outline"
                             onClick={() => setIsImporting(true)}
-                            className="rounded-full border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-300 px-6"
+                            className="rounded-full border-border bg-muted/50 hover:bg-muted text-foreground px-6"
                         >
                             <Upload className="w-4 h-4 mr-2" />
                             Bulk Import
                         </Button>
                         <Button 
                             onClick={() => setIsCreating(true)}
-                            className="rounded-full bg-white text-black hover:bg-zinc-200 font-bold px-6 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6 shadow-lg shadow-primary/20"
                         >
                             <UserPlus className="w-4 h-4 mr-2" />
                             Add Student
@@ -310,19 +310,19 @@ export default function StudentsPage() {
                 {/* Search & Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div className="md:col-span-3 relative group">
-                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-emerald-400 transition-colors">
+                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-emerald-500 transition-colors">
                             <Search className="w-4 h-4" />
                         </div>
-                        <input 
+                        <Input 
                             placeholder="Search by LRN, name, or section..." 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 h-12 bg-zinc-900/30 border border-zinc-800 focus:border-emerald-500/50 rounded-xl transition-all outline-none text-zinc-200"
+                            className="w-full pl-10 h-12 bg-muted/30 border-border focus:ring-2 focus:ring-emerald-500/20 rounded-xl transition-all"
                         />
                     </div>
-                    <div className="bg-zinc-900/30 border border-zinc-800 rounded-xl px-4 flex items-center justify-between backdrop-blur-sm">
-                        <div className="text-sm text-zinc-500">Student Count</div>
-                        <div className="text-xl font-bold text-white">{students.length}</div>
+                    <div className="bg-muted/30 border border-border rounded-xl px-4 flex items-center justify-between backdrop-blur-sm">
+                        <div className="text-sm text-muted-foreground">Student Count</div>
+                        <div className="text-xl font-bold text-foreground">{students.length}</div>
                     </div>
                 </div>
 
@@ -336,19 +336,19 @@ export default function StudentsPage() {
                     <div className="overflow-x-auto">
                         <Table>
                             <TableHeader>
-                                <TableRow className="border-zinc-800 hover:bg-transparent bg-zinc-900/50">
-                                    <TableHead className="py-4">Student Name</TableHead>
-                                    <TableHead>LRN</TableHead>
-                                    <TableHead>Section</TableHead>
-                                    <TableHead>Level</TableHead>
-                                    <TableHead>Gender</TableHead>
-                                    <TableHead className="text-right px-6">Actions</TableHead>
+                                <TableRow className="border-border hover:bg-transparent bg-muted/50">
+                                    <TableHead className="py-4 text-muted-foreground">Student Name</TableHead>
+                                    <TableHead className="text-muted-foreground">LRN</TableHead>
+                                    <TableHead className="text-muted-foreground">Section</TableHead>
+                                    <TableHead className="text-muted-foreground">Level</TableHead>
+                                    <TableHead className="text-muted-foreground">Gender</TableHead>
+                                    <TableHead className="text-right px-6 text-muted-foreground">Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {loading && (
                                     [0, 1, 2, 3, 4].map((i) => (
-                                        <TableRow key={`skeleton-${i}`} className="border-zinc-800 animate-pulse">
+                                        <TableRow key={`skeleton-${i}`} className="border-border animate-pulse">
                                             <TableCell><div className="h-10 w-48 bg-zinc-800/50 rounded-lg" /></TableCell>
                                             <TableCell><div className="h-6 w-24 bg-zinc-800/50 rounded-lg" /></TableCell>
                                             <TableCell><div className="h-6 w-20 bg-zinc-800/50 rounded-lg" /></TableCell>
@@ -363,36 +363,31 @@ export default function StudentsPage() {
                                     <AnimatePresence mode="popLayout">
                                         {filteredStudents.map((student) => (
                                             <motion.tr 
-                                                key={student.lrn}
-                                                layout
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                exit={{ opacity: 0, x: -20 }}
-                                                className="group border-zinc-800 hover:bg-zinc-800/30 transition-colors"
+                                                className="group border-border hover:bg-muted/30 transition-colors"
                                             >
                                                 <TableCell className="py-4">
                                                     <div className="flex items-center gap-3">
-                                                        <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 font-bold">
+                                                        <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold">
                                                             {student.first_name[0]}{student.last_name[0]}
                                                         </div>
                                                         <div>
-                                                            <div className="font-semibold text-zinc-100">{student.first_name} {student.last_name}</div>
-                                                            <div className="text-[10px] text-zinc-500 uppercase tracking-widest">{student.middle_name || '-'}</div>
+                                                            <div className="font-semibold text-foreground">{student.first_name} {student.last_name}</div>
+                                                            <div className="text-[10px] text-muted-foreground uppercase tracking-widest">{student.middle_name || '-'}</div>
                                                         </div>
                                                     </div>
                                                 </TableCell>
-                                                <TableCell className="font-mono text-zinc-400 text-sm">
+                                                <TableCell className="font-mono text-muted-foreground text-sm">
                                                     {student.lrn}
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="text-zinc-300">
+                                                    <div className="text-foreground/80">
                                                         {sections.find(sec => sec.section_id === student.section_id)?.section_name || 'N/A'}
                                                     </div>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <span className="text-zinc-500 text-xs">G{student.grade_level}</span>
+                                                    <span className="text-muted-foreground text-xs">G{student.grade_level}</span>
                                                 </TableCell>
-                                                <TableCell className="text-zinc-500 text-xs uppercase">
+                                                <TableCell className="text-muted-foreground text-xs uppercase">
                                                     {student.gender}
                                                 </TableCell>
                                                 <TableCell className="text-right px-6">
@@ -402,17 +397,17 @@ export default function StudentsPage() {
                                                                 <MoreVertical className="w-4 h-4" />
                                                             </Button>
                                                         </DropdownMenuTrigger>
-                                                        <DropdownMenuContent align="end" className="bg-zinc-900 border-zinc-800 text-zinc-300">
+                                                        <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-xl min-w-[160px] p-2">
                                                             <DropdownMenuItem 
                                                                 onClick={() => setEditingStudent(student)}
-                                                                className="hover:bg-zinc-800 cursor-pointer"
+                                                                className="cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors"
                                                             >
-                                                                <Edit2 className="w-4 h-4 mr-2 text-emerald-400" />
+                                                                <Edit2 className="w-4 h-4 mr-2 text-emerald-600 dark:text-emerald-400" />
                                                                 Edit Profile
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem 
                                                                 onClick={() => handleDeleteStudent(student.lrn)}
-                                                                className="hover:bg-red-950/30 hover:text-red-400 text-red-500 cursor-pointer"
+                                                                className="text-destructive cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors focus:text-destructive"
                                                             >
                                                                 <Trash2 className="w-4 h-4 mr-2" />
                                                                 Decommission
@@ -440,26 +435,26 @@ export default function StudentsPage() {
                     }
                 }}
             >
-                <DialogContent className="bg-[#0a0a0f] border-zinc-800 text-zinc-100 max-w-2xl rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                <DialogContent className="bg-card border-border text-foreground max-w-2xl rounded-3xl p-0 overflow-hidden shadow-2xl">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-50" />
                     
-                    <DialogHeader className="pt-4">
+                    <DialogHeader className="p-6 pb-0">
                         <DialogTitle className="text-2xl font-bold tracking-tight">
                             {isCreating ? "Add Student" : "Edit Student"}
                         </DialogTitle>
-                        <DialogDescription className="text-zinc-500">
+                        <DialogDescription className="text-muted-foreground">
                             Update student details and section assignment.
                         </DialogDescription>
                     </DialogHeader>
 
                     <form 
                         onSubmit={isCreating ? handleCreateStudent : handleUpdateStudent} 
-                        className="space-y-6 py-4"
+                        className="space-y-6 p-6"
                     >
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="lrn" className="text-zinc-400 text-xs uppercase tracking-widest font-bold">LRN (Unique ID)</Label>
+                                    <Label htmlFor="lrn" className="text-muted-foreground text-xs uppercase tracking-widest font-bold">LRN (Unique ID)</Label>
                                     <Input 
                                         id="lrn"
                                         required
@@ -469,11 +464,11 @@ export default function StudentsPage() {
                                             if (isCreating) setNewStudent({...newStudent, lrn: e.target.value});
                                         }}
                                         placeholder="12-digit number"
-                                        className="bg-zinc-900/50 border-zinc-800 focus:border-emerald-500/50 h-12 rounded-xl"
+                                        className="bg-muted/30 border-border focus:ring-2 focus:ring-emerald-500/20 h-12 rounded-xl"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="first_name" className="text-zinc-400 text-xs uppercase tracking-widest font-bold">First Name</Label>
+                                    <Label htmlFor="first_name" className="text-muted-foreground text-xs uppercase tracking-widest font-bold">First Name</Label>
                                     <Input 
                                         id="first_name"
                                         required
@@ -482,11 +477,11 @@ export default function StudentsPage() {
                                             if (isCreating) setNewStudent({...newStudent, first_name: e.target.value});
                                             else if (editingStudent) setEditingStudent({...editingStudent, first_name: e.target.value});
                                         }}
-                                        className="bg-zinc-900/50 border-zinc-800 focus:border-emerald-500/50 h-12 rounded-xl"
+                                        className="bg-muted/30 border-border focus:ring-2 focus:ring-emerald-500/20 h-12 rounded-xl"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="last_name" className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Last Name</Label>
+                                    <Label htmlFor="last_name" className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Last Name</Label>
                                     <Input 
                                         id="last_name"
                                         required
@@ -495,11 +490,11 @@ export default function StudentsPage() {
                                             if (isCreating) setNewStudent({...newStudent, last_name: e.target.value});
                                             else if (editingStudent) setEditingStudent({...editingStudent, last_name: e.target.value});
                                         }}
-                                        className="bg-zinc-900/50 border-zinc-800 focus:border-emerald-500/50 h-12 rounded-xl"
+                                        className="bg-muted/30 border-border focus:ring-2 focus:ring-emerald-500/20 h-12 rounded-xl"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="middle_name" className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Middle Name</Label>
+                                    <Label htmlFor="middle_name" className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Middle Name</Label>
                                     <Input 
                                         id="middle_name"
                                         value={isCreating ? (newStudent.middle_name ?? '') : (editingStudent?.middle_name ?? '')}
@@ -507,14 +502,14 @@ export default function StudentsPage() {
                                             if (isCreating) setNewStudent({...newStudent, middle_name: e.target.value});
                                             else if (editingStudent) setEditingStudent({...editingStudent, middle_name: e.target.value});
                                         }}
-                                        className="bg-zinc-900/50 border-zinc-800 focus:border-emerald-500/50 h-12 rounded-xl"
+                                        className="bg-muted/30 border-border focus:ring-2 focus:ring-emerald-500/20 h-12 rounded-xl"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <Label className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Gender</Label>
+                                    <Label className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Gender</Label>
                                     <Select 
                                         value={isCreating ? newStudent.gender : editingStudent?.gender || ''}
                                         onValueChange={(val: string) => {
@@ -522,10 +517,10 @@ export default function StudentsPage() {
                                             else if (editingStudent) setEditingStudent({...editingStudent, gender: val});
                                         }}
                                     >
-                                        <SelectTrigger className="bg-zinc-900/50 border-zinc-800 h-12 rounded-xl">
+                                        <SelectTrigger className="bg-muted/30 border-border h-12 rounded-xl">
                                             <SelectValue placeholder="Select Gender" />
                                         </SelectTrigger>
-                                        <SelectContent className="bg-zinc-950 border-zinc-800">
+                                        <SelectContent className="bg-popover border-border text-popover-foreground">
                                             <SelectItem value="Male">Male</SelectItem>
                                             <SelectItem value="Female">Female</SelectItem>
                                             <SelectItem value="Other">Other</SelectItem>
@@ -533,7 +528,7 @@ export default function StudentsPage() {
                                     </Select>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Grade Level</Label>
+                                    <Label className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Grade Level</Label>
                                     <Select 
                                         value={isCreating ? newStudent.grade_level : editingStudent?.grade_level || ''}
                                         onValueChange={(val: string) => {
@@ -541,10 +536,10 @@ export default function StudentsPage() {
                                             else if (editingStudent) setEditingStudent({...editingStudent, grade_level: val});
                                         }}
                                     >
-                                        <SelectTrigger className="bg-zinc-900/50 border-zinc-800 h-12 rounded-xl">
+                                        <SelectTrigger className="bg-muted/30 border-border h-12 rounded-xl">
                                             <SelectValue placeholder="Select Grade" />
                                         </SelectTrigger>
-                                        <SelectContent className="bg-zinc-950 border-zinc-800">
+                                        <SelectContent className="bg-popover border-border text-popover-foreground">
                                             {['11', '12'].map(g => (
                                                 <SelectItem key={g} value={g}>Grade {g}</SelectItem>
                                             ))}
@@ -552,7 +547,7 @@ export default function StudentsPage() {
                                     </Select>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Section Assignment</Label>
+                                    <Label className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Section Assignment</Label>
                                     <Select 
                                         value={isCreating ? newStudent.section_id?.toString() : editingStudent?.section_id?.toString() || ''}
                                         onValueChange={(val: string) => {
@@ -560,10 +555,10 @@ export default function StudentsPage() {
                                             else if (editingStudent) setEditingStudent({...editingStudent, section_id: Number.parseInt(val, 10)});
                                         }}
                                     >
-                                        <SelectTrigger className="bg-zinc-900/50 border-zinc-800 h-12 rounded-xl">
+                                        <SelectTrigger className="bg-muted/30 border-border h-12 rounded-xl">
                                             <SelectValue placeholder="Select Section" />
                                         </SelectTrigger>
-                                        <SelectContent className="bg-zinc-950 border-zinc-800">
+                                        <SelectContent className="bg-popover border-border text-popover-foreground">
                                             {sections.filter(sec => 
                                                 sec.grade_level === (isCreating ? newStudent.grade_level : editingStudent?.grade_level)
                                             ).map(sec => (
@@ -575,7 +570,7 @@ export default function StudentsPage() {
                                     </Select>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Adviser Assignment</Label>
+                                    <Label className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Adviser Assignment</Label>
                                     <Select 
                                         value={isCreating ? newStudent.adviser_id?.toString() : editingStudent?.adviser_id?.toString() || ''}
                                         onValueChange={(val: string) => {
@@ -583,10 +578,10 @@ export default function StudentsPage() {
                                             else if (editingStudent) setEditingStudent({...editingStudent, adviser_id: Number.parseInt(val, 10)});
                                         }}
                                     >
-                                        <SelectTrigger className="bg-zinc-900/50 border-zinc-800 h-12 rounded-xl">
+                                        <SelectTrigger className="bg-muted/30 border-border h-12 rounded-xl">
                                             <SelectValue placeholder="Select Adviser" />
                                         </SelectTrigger>
-                                        <SelectContent className="bg-zinc-950 border-zinc-800">
+                                        <SelectContent className="bg-popover border-border text-popover-foreground">
                                             {teachers.map(t => (
                                                 <SelectItem key={t.id} value={t.id.toString()}>
                                                     {t.full_name}
@@ -598,7 +593,7 @@ export default function StudentsPage() {
                             </div>
                         </div>
 
-                        <DialogFooter className="pt-4 gap-3">
+                        <DialogFooter className="gap-2 sm:gap-0">
                             <Button 
                                 type="button" 
                                 variant="ghost" 
@@ -606,14 +601,14 @@ export default function StudentsPage() {
                                     setIsCreating(false);
                                     setEditingStudent(null);
                                 }}
-                                className="hover:bg-zinc-800 rounded-xl"
+                                className="rounded-xl hover:bg-muted"
                             >
                                 Cancel
                             </Button>
                             <Button 
                                 type="submit" 
                                 disabled={isSaving}
-                                className="bg-white text-black hover:bg-zinc-200 font-bold px-12 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-12 rounded-xl shadow-lg shadow-primary/20 transition-all"
                             >
                                 {isSaving ? (
                                     <Loader2 className="w-4 h-4 animate-spin mr-2" />

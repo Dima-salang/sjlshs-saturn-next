@@ -160,7 +160,7 @@ export default function SectionsPage() {
     );
 
     return (
-        <div className="min-h-screen bg-[#050508] text-zinc-100 p-6 md:p-12 font-sans">
+        <div className="min-h-screen bg-background text-foreground p-6 md:p-12 font-sans">
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -176,7 +176,7 @@ export default function SectionsPage() {
                         <motion.h1 
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-4xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500"
+                            className="text-4xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
                         >
                             Manage Sections
                         </motion.h1>
@@ -184,7 +184,7 @@ export default function SectionsPage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.1 }}
-                            className="text-zinc-500 max-w-lg"
+                            className="text-muted-foreground max-w-lg"
                         >
                             Create and manage class sections and assign faculty advisers.
                         </motion.p>
@@ -200,13 +200,13 @@ export default function SectionsPage() {
                             size="icon" 
                             onClick={fetchData}
                             disabled={loading}
-                            className="rounded-full border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-400"
+                            className="rounded-full border-border bg-muted/50 hover:bg-muted text-muted-foreground"
                         >
                             <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
                         </Button>
                         <Button 
                             onClick={() => setIsCreating(true)}
-                            className="rounded-full bg-white text-black hover:bg-zinc-200 font-bold px-6 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6 shadow-lg shadow-primary/20"
                         >
                             <Plus className="w-4 h-4 mr-2" />
                             New Section
@@ -217,19 +217,19 @@ export default function SectionsPage() {
                 {/* Search & Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div className="md:col-span-3 relative group">
-                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-indigo-400 transition-colors">
+                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-indigo-400 transition-colors">
                             <Search className="w-4 h-4" />
                         </div>
-                        <input 
+                        <Input 
                             placeholder="Search sections, grades, or advisers..." 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 h-12 bg-zinc-900/30 border border-zinc-800 focus:border-indigo-500/50 rounded-xl transition-all outline-none text-zinc-200"
+                            className="w-full pl-10 h-12 bg-muted/30 border-border focus:ring-2 focus:ring-indigo-500/20 rounded-xl transition-all"
                         />
                     </div>
-                    <div className="bg-zinc-900/30 border border-zinc-800 rounded-xl px-4 flex items-center justify-between backdrop-blur-sm">
-                        <div className="text-sm text-zinc-500">Total Sections</div>
-                        <div className="text-xl font-bold text-white">{sections.length}</div>
+                    <div className="bg-muted/30 border border-border rounded-xl px-4 flex items-center justify-between backdrop-blur-sm">
+                        <div className="text-sm text-muted-foreground">Total Sections</div>
+                        <div className="text-xl font-bold text-foreground">{sections.length}</div>
                     </div>
                 </div>
 
@@ -275,9 +275,9 @@ export default function SectionsPage() {
                                             <TableCell className="py-4">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
-                                                        <Layout className="w-4 h-4 text-indigo-400" />
+                                                        <Layout className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                                                     </div>
-                                                    <span className="font-semibold text-zinc-100">{section.section_name}</span>
+                                                    <span className="font-semibold text-foreground">{section.section_name}</span>
                                                 </div>
                                             </TableCell>
                                             <TableCell>
@@ -285,9 +285,9 @@ export default function SectionsPage() {
                                                     Grade {section.grade_level}
                                                 </div>
                                             </TableCell>
-                                            <TableCell className="text-zinc-400">
+                                            <TableCell className="text-muted-foreground">
                                                 {teachers.find(t => t.id === section.adviser_id)?.full_name || (
-                                                    <span className="text-zinc-700 italic">Not Assigned</span>
+                                                    <span className="text-muted-foreground/30 italic">Not Assigned</span>
                                                 )}
                                             </TableCell>
                                             <TableCell className="text-right px-6">
@@ -297,17 +297,17 @@ export default function SectionsPage() {
                                                             <MoreVertical className="w-4 h-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end" className="bg-zinc-900 border-zinc-800 text-zinc-300">
+                                                    <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-xl min-w-[160px] p-2">
                                                         <DropdownMenuItem 
                                                             onClick={() => setEditingSection(section)}
-                                                            className="hover:bg-zinc-800 cursor-pointer"
+                                                            className="cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors"
                                                         >
-                                                            <Edit2 className="w-4 h-4 mr-2 text-indigo-400" />
+                                                            <Edit2 className="w-4 h-4 mr-2 text-indigo-600 dark:text-indigo-400" />
                                                             Modify Section
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem 
                                                             onClick={() => handleDeleteSection(section.section_id)}
-                                                            className="hover:bg-red-950/30 hover:text-red-400 text-red-500 cursor-pointer"
+                                                            className="text-destructive cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors focus:text-destructive"
                                                         >
                                                             <Trash2 className="w-4 h-4 mr-2" />
                                                             Delete Section
@@ -334,25 +334,25 @@ export default function SectionsPage() {
                     }
                 }}
             >
-                <DialogContent className="bg-[#0a0a0f] border-zinc-800 text-zinc-100 max-w-md rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                <DialogContent className="bg-card border-border text-foreground max-w-md rounded-3xl p-0 overflow-hidden shadow-2xl">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50" />
                     
-                    <DialogHeader className="pt-4">
+                    <DialogHeader className="p-6 pb-0">
                         <DialogTitle className="text-2xl font-bold tracking-tight">
                             {isCreating ? "Create Section" : "Edit Section"}
                         </DialogTitle>
-                        <DialogDescription className="text-zinc-500">
+                        <DialogDescription className="text-muted-foreground">
                             Update the details for this section.
                         </DialogDescription>
                     </DialogHeader>
 
                     <form 
                         onSubmit={isCreating ? handleCreateSection : handleUpdateSection} 
-                        className="space-y-6 py-4"
+                        className="space-y-6 p-6"
                     >
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="section_name" className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Section Name</Label>
+                                <Label htmlFor="section_name" className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Section Name</Label>
                                 <Input 
                                     id="section_name"
                                     required
@@ -362,12 +362,12 @@ export default function SectionsPage() {
                                         else if (editingSection) setEditingSection({...editingSection, section_name: e.target.value});
                                     }}
                                     placeholder="e.g. Einstein"
-                                    className="bg-zinc-900/50 border-zinc-800 focus:border-indigo-500/50 h-12 rounded-xl transition-all"
+                                    className="bg-muted/30 border-border focus:ring-2 focus:ring-indigo-500/20 h-12 rounded-xl transition-all"
                                 />
                             </div>
                             
                             <div className="space-y-2">
-                                <Label htmlFor="grade_level" className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Grade Level</Label>
+                                <Label htmlFor="grade_level" className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Grade Level</Label>
                                 <Select 
                                     value={isCreating ? newSection.grade_level : editingSection?.grade_level || ''}
                                     onValueChange={(val: string) => {
@@ -375,19 +375,19 @@ export default function SectionsPage() {
                                         else if (editingSection) setEditingSection({...editingSection, grade_level: val});
                                     }}
                                 >
-                                    <SelectTrigger className="bg-zinc-900/50 border-zinc-800 h-12 rounded-xl">
+                                    <SelectTrigger className="bg-muted/30 border-border h-12 rounded-xl">
                                         <SelectValue placeholder="Select Grade" />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-zinc-950 border-zinc-800">
+                                    <SelectContent className="bg-popover border-border text-popover-foreground">
                                         {['11', '12'].map(grade => (
-                                            <SelectItem key={grade} value={grade} className="hover:bg-zinc-900">Grade {grade}</SelectItem>
+                                            <SelectItem key={grade} value={grade}>Grade {grade}</SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="adviser" className="text-zinc-400 text-xs uppercase tracking-widest font-bold">Adviser</Label>
+                                <Label htmlFor="adviser" className="text-muted-foreground text-xs uppercase tracking-widest font-bold">Adviser</Label>
                                 <Select 
                                     value={isCreating ? newSection.adviser_id : editingSection?.adviser_id?.toString() || ''}
                                     onValueChange={(val: string) => {
@@ -395,12 +395,12 @@ export default function SectionsPage() {
                                         else if (editingSection) setEditingSection({...editingSection, adviser_id: Number.parseInt(val, 10)});
                                     }}
                                 >
-                                    <SelectTrigger className="bg-zinc-900/50 border-zinc-800 h-12 rounded-xl">
+                                    <SelectTrigger className="bg-muted/30 border-border h-12 rounded-xl">
                                         <SelectValue placeholder="Select Teacher" />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-zinc-950 border-zinc-800">
+                                    <SelectContent className="bg-popover border-border text-popover-foreground">
                                         {teachers.map(teacher => (
-                                            <SelectItem key={teacher.id} value={teacher.id.toString()} className="hover:bg-zinc-900">
+                                            <SelectItem key={teacher.id} value={teacher.id.toString()}>
                                                 {teacher.full_name}
                                             </SelectItem>
                                         ))}
@@ -409,7 +409,7 @@ export default function SectionsPage() {
                             </div>
                         </div>
 
-                        <DialogFooter className="pt-4">
+                        <DialogFooter className="gap-2 sm:gap-0">
                             <Button 
                                 type="button" 
                                 variant="ghost" 
@@ -417,14 +417,14 @@ export default function SectionsPage() {
                                     setIsCreating(false);
                                     setEditingSection(null);
                                 }}
-                                className="hover:bg-zinc-800 rounded-xl"
+                                className="rounded-xl hover:bg-muted"
                             >
                                 Cancel
                             </Button>
                             <Button 
                                 type="submit" 
                                 disabled={isSaving}
-                                className="bg-white text-black hover:bg-zinc-200 font-bold px-8 rounded-xl shadow-lg transition-all"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8 rounded-xl shadow-lg transition-all"
                             >
                                 {isSaving ? (
                                     <Loader2 className="w-4 h-4 animate-spin mr-2" />

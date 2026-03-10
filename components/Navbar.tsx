@@ -14,49 +14,42 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export function Navbar() {
     const { user, logout, loading } = useAuth();
 
     let authSection;
     if (loading) {
-        authSection = <div className="h-8 w-8 rounded-full bg-zinc-900 animate-pulse" />;
+        authSection = <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />;
     } else if (user) {
         authSection = (
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 hover:bg-zinc-800/50 transition-colors">
-                        <Avatar className="h-9 w-9 border border-zinc-800">
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 hover:bg-accent/50 transition-colors">
+                        <Avatar className="h-9 w-9 border border-border">
                             <AvatarImage src={`https://avatar.vercel.sh/${user.email}`} />
-                            <AvatarFallback className="bg-zinc-900 text-zinc-400">
+                            <AvatarFallback className="bg-muted text-muted-foreground">
                                 {user.name.charAt(0)}
                             </AvatarFallback>
                         </Avatar>
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-zinc-900 border-zinc-800 text-zinc-100" align="end" forceMount>
+                <DropdownMenuContent className="w-56 bg-popover border-border text-popover-foreground" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                         <div className="flex flex-col space-y-1">
-                            <p className="text-sm font-medium leading-none text-white">{user.name}</p>
-                            <p className="text-xs leading-none text-zinc-500">{user.email}</p>
+                            <p className="text-sm font-medium leading-none">{user.name}</p>
+                            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                         </div>
                     </DropdownMenuLabel>
-                    <DropdownMenuSeparator className="bg-zinc-800" />
-                    <DropdownMenuItem className="hover:bg-zinc-800 cursor-pointer text-zinc-300">
-                        <User className="mr-2 h-4 w-4" />
+                    <DropdownMenuSeparator className="bg-border" />
+                    <DropdownMenuItem className="hover:bg-accent cursor-pointer group">
+                        <User className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                         <span>Profile</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="hover:bg-zinc-800 cursor-pointer text-zinc-300">
-                        <Settings className="mr-2 h-4 w-4" />
+                    <DropdownMenuItem className="hover:bg-accent cursor-pointer group">
+                        <Settings className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-foreground" />
                         <span>Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-zinc-800" />
-                    <DropdownMenuItem 
-                        onClick={() => logout()}
-                        className="hover:bg-red-950/30 hover:text-red-400 cursor-pointer text-red-500"
-                    >
-                        <LogOut className="mr-2 h-4 w-4" />
-                        <span>Log out</span>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
@@ -64,11 +57,11 @@ export function Navbar() {
     } else {
         authSection = (
             <div className="flex items-center gap-2">
-                <Button asChild variant="ghost" className="text-zinc-400 hover:text-white hover:bg-zinc-800/50">
+                <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground hover:bg-accent/50">
                     <Link href="/login">Sign In</Link>
                 </Button>
-                <Button asChild className="bg-white text-black hover:bg-zinc-200 font-semibold rounded-full px-5">
-                    <Link href="/register">Join Orbit</Link>
+                <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold rounded-full px-5">
+                    <Link href="/register">Sign Up</Link>
                 </Button>
             </div>
         );
@@ -78,23 +71,26 @@ export function Navbar() {
         <motion.nav 
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/50 bg-[#050508]/80 backdrop-blur-md"
+            className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md"
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-3 group">
+                    <Link 
+                        href={user && !user.is_active ? '/inactive' : '/'} 
+                        className="flex items-center gap-3 group"
+                    >
                         <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                             <Orbit className="w-5 h-5 text-white" />
                         </div>
-                        <span className="text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-400">
+                        <span className="text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60">
                             SATURN
                         </span>
                     </Link>
 
                     {/* Navigation Links */}
                     <div className="hidden md:flex items-center gap-1">
-                        {user && (
+                        {user && user.is_active && (
                             <>
                                 <NavLink href="/scan" icon={<Scan className="w-4 h-4" />}>
                                     Scan QR
@@ -121,7 +117,19 @@ export function Navbar() {
                     </div>
 
                     {/* User Actions */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <ThemeToggle />
+                        {user && (
+                             <Button 
+                             onClick={() => logout()}
+                             variant="ghost" 
+                             size="sm"
+                             className="text-muted-foreground hover:text-red-600 hover:bg-red-500/10 transition-colors h-9 px-3"
+                         >
+                             <LogOut className="mr-2 h-4 w-4" />
+                             <span className="hidden sm:inline font-medium">Logout</span>
+                         </Button>
+                        )}
                         {authSection}
                     </div>
                 </div>
@@ -134,9 +142,9 @@ function NavLink({ href, children, icon }: Readonly<{ href: string; children: Re
     return (
         <Link 
             href={href}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all group"
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-all group"
         >
-            <span className="text-zinc-500 group-hover:text-blue-400 transition-colors">
+            <span className="text-muted-foreground/60 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 {icon}
             </span>
             {children}

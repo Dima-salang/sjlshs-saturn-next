@@ -148,7 +148,7 @@ export default function TeachersPage() {
     );
 
     return (
-        <div className="min-h-screen bg-[#050508] text-zinc-100 p-6 md:p-12 font-sans">
+        <div className="min-h-screen bg-background text-foreground p-6 md:p-12 font-sans">
             <div className="max-w-6xl mx-auto space-y-8">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -164,7 +164,7 @@ export default function TeachersPage() {
                         <motion.h1 
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-4xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500"
+                            className="text-4xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/60"
                         >
                             Teacher Management
                         </motion.h1>
@@ -172,7 +172,7 @@ export default function TeachersPage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.1 }}
-                            className="text-zinc-500 max-w-lg"
+                            className="text-muted-foreground max-w-lg"
                         >
                             Manage the teaching staff. Activate accounts, assign advisory sections, and maintain faculty records.
                         </motion.p>
@@ -188,11 +188,11 @@ export default function TeachersPage() {
                             size="icon" 
                             onClick={fetchData}
                             disabled={loading}
-                            className="rounded-full border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-400"
+                            className="rounded-full border-border bg-muted/50 hover:bg-muted text-muted-foreground"
                         >
                             <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
                         </Button>
-                        <Button className="rounded-full bg-white text-black hover:bg-zinc-200 font-bold px-6">
+                        <Button className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6">
                             <UserPlus className="w-4 h-4 mr-2" />
                             Invite Teacher
                         </Button>
@@ -202,19 +202,19 @@ export default function TeachersPage() {
                 {/* Search & Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div className="md:col-span-3 relative group">
-                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-blue-400 transition-colors">
+                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-muted-foreground group-focus-within:text-blue-500 transition-colors">
                             <Search className="w-4 h-4" />
                         </div>
                         <Input 
                             placeholder="Search by name, email, or section..." 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-10 h-12 bg-zinc-900/30 border-zinc-800 focus:border-blue-500/50 rounded-xl transition-all"
+                            className="pl-10 h-12 bg-muted/30 border-border focus:ring-2 focus:ring-blue-500/20 rounded-xl transition-all"
                         />
                     </div>
-                    <div className="bg-zinc-900/30 border border-zinc-800 rounded-xl px-4 flex items-center justify-between backdrop-blur-sm">
-                        <div className="text-sm text-zinc-500">Total Teachers</div>
-                        <div className="text-xl font-bold text-white">{teachers.length}</div>
+                    <div className="bg-muted/30 border border-border rounded-xl px-4 flex items-center justify-between backdrop-blur-sm">
+                        <div className="text-sm text-muted-foreground">Total Teachers</div>
+                        <div className="text-xl font-bold text-foreground">{teachers.length}</div>
                     </div>
                 </div>
 
@@ -262,21 +262,21 @@ export default function TeachersPage() {
                                             <TableCell>
                                                 <div className="flex items-center gap-3">
                                                     <div className="relative">
-                                                        <div className="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center overflow-hidden">
+                                                        <div className="w-10 h-10 rounded-full bg-muted border border-border flex items-center justify-center overflow-hidden text-muted-foreground">
                                                             {teacher.user.avatar ? (
                                                                 <img src={teacher.user.avatar} alt="" className="w-full h-full object-cover" />
                                                             ) : (
-                                                                <Users className="w-5 h-5 text-zinc-600" />
+                                                                <Users className="w-5 h-5 transition-colors" />
                                                             )}
                                                         </div>
                                                         <div className={cn(
-                                                            "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[#050508]",
-                                                            teacher.is_active ? "bg-emerald-500" : "bg-zinc-600"
+                                                            "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background",
+                                                            teacher.is_active ? "bg-emerald-500" : "bg-muted-foreground/30"
                                                         )} />
                                                     </div>
                                                     <div>
-                                                        <div className="font-semibold text-zinc-100">{teacher.full_name}</div>
-                                                        <div className="text-xs text-zinc-500 truncate max-w-[180px]">{teacher.user.email}</div>
+                                                        <div className="font-semibold text-foreground">{teacher.full_name}</div>
+                                                        <div className="text-xs text-muted-foreground truncate max-w-[180px]">{teacher.user.email}</div>
                                                     </div>
                                                 </div>
                                             </TableCell>
@@ -314,17 +314,17 @@ export default function TeachersPage() {
                                                             <MoreVertical className="w-4 h-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end" className="bg-zinc-900 border-zinc-800 text-zinc-300">
+                                                    <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-xl min-w-[160px] p-2">
                                                         <DropdownMenuItem 
                                                             onClick={() => setEditingTeacher(teacher)}
-                                                            className="hover:bg-zinc-800 cursor-pointer"
+                                                            className="cursor-pointer rounded-lg px-3 py-2.5 h-auto"
                                                         >
-                                                            <Edit2 className="w-4 h-4 mr-2 text-blue-400" />
+                                                            <Edit2 className="w-4 h-4 mr-2 text-blue-500" />
                                                             Edit Teacher
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem 
                                                             onClick={() => handleDeleteTeacher(teacher.id)}
-                                                            className="hover:bg-red-950/30 hover:text-red-400 text-red-500 cursor-pointer"
+                                                            className="text-destructive cursor-pointer rounded-lg px-3 py-2.5 h-auto focus:text-destructive"
                                                         >
                                                             <Trash2 className="w-4 h-4 mr-2" />
                                                             Delete Teacher
@@ -354,36 +354,36 @@ export default function TeachersPage() {
 
             {/* Edit Dialog */}
             <Dialog open={!!editingTeacher} onOpenChange={(open) => !open && setEditingTeacher(null)}>
-                <DialogContent className="bg-zinc-950 border-zinc-800 text-zinc-100 max-w-md rounded-2xl">
-                    <DialogHeader>
+                <DialogContent className="bg-card border-border text-foreground max-w-md rounded-2xl p-0 overflow-hidden shadow-2xl">
+                    <DialogHeader className="p-6 pb-0">
                         <DialogTitle className="text-2xl font-bold tracking-tight">Edit Teacher</DialogTitle>
-                        <DialogDescription className="text-zinc-500">
+                        <DialogDescription className="text-muted-foreground">
                             Update teacher account details and system permissions.
                         </DialogDescription>
                     </DialogHeader>
 
                     {editingTeacher && (
-                        <form onSubmit={handleUpdateTeacher} className="space-y-6 py-4">
+                        <form onSubmit={handleUpdateTeacher} className="space-y-6 p-6">
                             <div className="space-y-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="name" className="text-zinc-400">Full Name</Label>
+                                    <Label htmlFor="name" className="text-muted-foreground text-xs uppercase tracking-wider font-bold">Full Name</Label>
                                     <Input 
                                         id="name"
                                         value={editingTeacher.full_name}
                                         onChange={(e) => setEditingTeacher({ ...editingTeacher, full_name: e.target.value })}
-                                        className="bg-zinc-900 border-zinc-800 focus:border-blue-500/50"
+                                        className="bg-muted/30 border-border focus:ring-2 focus:ring-blue-500/20"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label className="text-zinc-400">Advisory Assignment</Label>
+                                    <Label className="text-muted-foreground text-xs uppercase tracking-wider font-bold">Advisory Assignment</Label>
                                     <Select 
                                         value={editingTeacher.section_id?.toString() || "none"} 
                                         onValueChange={(val) => setEditingTeacher({ ...editingTeacher, section_id: val === "none" ? null : Number.parseInt(val) })}
                                     >
-                                        <SelectTrigger className="bg-zinc-900 border-zinc-800 focus:ring-blue-500/20">
+                                        <SelectTrigger className="bg-muted/30 border-border focus:ring-2 focus:ring-blue-500/20">
                                             <SelectValue placeholder="Assign Advisory" />
                                         </SelectTrigger>
-                                        <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-100">
+                                        <SelectContent className="bg-popover border-border text-popover-foreground">
                                             <SelectItem value="none">No Advisory</SelectItem>
                                             {sections.map(s => (
                                                 <SelectItem key={s.section_id} value={s.section_id.toString()}>
@@ -393,21 +393,21 @@ export default function TeachersPage() {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="flex items-center justify-between p-4 bg-muted/20 border border-border rounded-xl">
                                         <div className="space-y-0.5">
-                                            <Label className="text-sm font-medium">Administrator</Label>
-                                            <p className="text-[10px] text-zinc-500">Full system access</p>
+                                            <Label className="text-sm font-bold">Administrator</Label>
+                                            <p className="text-[10px] text-muted-foreground">Full system access</p>
                                         </div>
                                         <Switch 
                                             checked={editingTeacher.is_admin}
                                             onCheckedChange={(checked) => setEditingTeacher({ ...editingTeacher, is_admin: checked })}
                                         />
                                     </div>
-                                    <div className="flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl">
+                                    <div className="flex items-center justify-between p-4 bg-muted/20 border border-border rounded-xl">
                                         <div className="space-y-0.5">
-                                            <Label className="text-sm font-medium">Non-Faculty</Label>
-                                            <p className="text-[10px] text-zinc-500">Staff or partner account</p>
+                                            <Label className="text-sm font-bold">Non-Faculty</Label>
+                                            <p className="text-[10px] text-muted-foreground">Staff or partner account</p>
                                         </div>
                                         <Switch 
                                             checked={editingTeacher.is_nonFaculty}
@@ -416,10 +416,10 @@ export default function TeachersPage() {
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl">
+                                <div className="flex items-center justify-between p-4 bg-muted/20 border border-border rounded-xl">
                                     <div className="space-y-0.5">
-                                        <Label className="text-sm font-medium">Account Status</Label>
-                                        <p className="text-xs text-zinc-500">Enabled or disable system access</p>
+                                        <Label className="text-sm font-bold">Account Status</Label>
+                                        <p className="text-[10px] text-muted-foreground">Enable or disable system access</p>
                                     </div>
                                     <Switch 
                                         checked={editingTeacher.is_active}
@@ -428,19 +428,19 @@ export default function TeachersPage() {
                                 </div>
                             </div>
 
-                            <DialogFooter>
+                            <DialogFooter className="gap-2 sm:gap-0">
                                 <Button 
                                     type="button" 
                                     variant="ghost" 
                                     onClick={() => setEditingTeacher(null)}
-                                    className="hover:bg-zinc-800"
+                                    className="rounded-full hover:bg-muted"
                                 >
                                     Cancel
                                 </Button>
                                 <Button 
                                     type="submit" 
                                     disabled={isUpdating}
-                                    className="bg-white text-black hover:bg-zinc-200 font-bold px-8 rounded-full"
+                                    className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8 rounded-full shadow-lg shadow-primary/20"
                                 >
                                     {isUpdating ? (
                                         <Loader2 className="w-4 h-4 animate-spin mr-2" />
