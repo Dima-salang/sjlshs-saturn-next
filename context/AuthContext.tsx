@@ -35,8 +35,9 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
         } catch (error: any) {
             if (error.response?.status === 401) {
                 setUser(null);
+            } else {
+                console.error('Failed to fetch user:', error);
             }
-            console.error('Failed to fetch user:', error);
         } finally {
             setLoading(false);
         }

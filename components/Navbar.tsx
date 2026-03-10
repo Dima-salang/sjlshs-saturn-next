@@ -127,7 +127,7 @@ export function Navbar() {
                     {/* User Actions */}
                     <div className="flex items-center gap-2">
                         <ThemeToggle />
-                        {user && (
+                        {(user || (typeof window !== 'undefined' && window.location.pathname === '/inactive')) && (
                              <Button 
                              onClick={() => logout()}
                              variant="ghost" 

@@ -15,8 +15,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Unauthorized - handle login redirect if needed
-      console.warn("Unauthorized access detected");
+      // Unauthorized - handled by AuthContext or specific page logic
     }
 
     if (error.response?.status === 403 && error.response?.data?.inactive) {

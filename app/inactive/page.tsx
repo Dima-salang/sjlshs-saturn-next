@@ -17,10 +17,10 @@ export default function InactiveAccountPage() {
             router.push('/admin/attendance');
         }
         
-        // If they have no session at all, they shouldn't be here
-        if (!loading && !user) {
-            router.push('/login');
-        }
+        // We allow them to stay on /inactive even if user is null 
+        // because the session fetch might have failed with a 401 
+        // due to cookie/domain issues, but they still need to see the page 
+        // and have an option to log out.
     }, [user, loading, router]);
 
     // Don't flash content while checking auth state
