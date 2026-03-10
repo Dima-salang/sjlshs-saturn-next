@@ -26,8 +26,12 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
 
     const fetchUser = useCallback(async () => {
         try {
-            const response = await api.get('/api/user');
-            setUser(response.data);
+            const response = await api.get('/api/me');
+            if (response.data.authenticated) {
+                setUser(response.data);
+            } else {
+                setUser(null);
+            }
         } catch (error: any) {
             if (error.response?.status === 401) {
                 setUser(null);

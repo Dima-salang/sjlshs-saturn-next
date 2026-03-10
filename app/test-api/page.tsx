@@ -17,13 +17,13 @@ export default function TestApiPage() {
         setError(null);
         try {
             await getCsrfToken();
-            const response = await api.get('/api/user');
+            const response = await api.get('/api/me');
             setData(response.data);
             setStatus('success');
         } catch (err: any) {
             console.error(err);
             if (err.response?.status === 401) {
-                setData({ message: 'Connected to API (Unauthorized, which is expected for /api/user without login)' });
+                setData({ authenticated: false, message: 'Connected to API (Unauthenticated)' });
                 setStatus('success');
             } else {
                 setError(err.message || 'An error occurred');
@@ -38,10 +38,10 @@ export default function TestApiPage() {
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold flex items-center gap-2">
                         <RefreshCcw className={cn("w-6 h-6", status === 'loading' && "animate-spin text-blue-400")} />
-                        API Connection Bridge
+                        System Connection Test
                     </CardTitle>
                     <CardDescription className="text-zinc-500">
-                        Diagnostics for the link between Next.js and Laravel.
+                        Check if the system is connected correctly.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -54,9 +54,9 @@ export default function TestApiPage() {
                             {status === 'loading' ? (
                                 <span className="flex items-center gap-2">
                                     <Loader2 className="w-4 h-4 animate-spin" />
-                                    Testing Bridge...
+                                    Testing Connection...
                                 </span>
-                            ) : 'Test Connection'}
+                            ) : 'Run System Test'}
                         </Button>
                     </div>
 
@@ -67,12 +67,12 @@ export default function TestApiPage() {
                         status === 'success' && "border-green-500/30 bg-green-500/5",
                         status === 'error' && "border-red-500/30 bg-red-500/5"
                     )}>
-                        <h3 className="text-sm font-medium uppercase tracking-widest text-zinc-500 mb-4">Diagnostic Output</h3>
+                        <h3 className="text-sm font-medium uppercase tracking-widest text-zinc-500 mb-4">Test Results</h3>
                         
                         {status === 'idle' && (
                             <div className="flex flex-col items-center py-8 text-zinc-600">
                                 <RefreshCcw className="w-12 h-12 mb-4 opacity-10" />
-                                <p>Ready to initialize handshake.</p>
+                                <p>Ready to test.</p>
                             </div>
                         )}
 
@@ -80,7 +80,7 @@ export default function TestApiPage() {
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 text-green-400">
                                     <CheckCircle2 className="w-5 h-5" />
-                                    <span className="font-semibold underline underline-offset-4">Success! Bridge is operational.</span>
+                                    <span className="font-semibold underline underline-offset-4">Connection Successful!</span>
                                 </div>
                                 <pre className="text-xs bg-black/40 p-4 rounded-lg border border-zinc-800 overflow-auto max-h-64 text-zinc-300">
                                     {JSON.stringify(data, null, 2)}
@@ -92,7 +92,7 @@ export default function TestApiPage() {
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 text-red-400">
                                     <AlertCircle className="w-5 h-5" />
-                                    <span className="font-semibold underline underline-offset-4">Handshake Failed</span>
+                                    <span className="font-semibold underline underline-offset-4">Connection Failed</span>
                                 </div>
                                 <div className="text-sm text-zinc-400 bg-red-500/10 p-4 rounded-lg border border-red-500/20">
                                     {error}
@@ -102,19 +102,19 @@ export default function TestApiPage() {
                     </div>
 
                     <div className="bg-zinc-900/80 rounded-xl p-4 border border-zinc-800/50">
-                        <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Recovery Protocols</h4>
+                        <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">How to fix this</h4>
                         <ul className="text-xs space-y-2 text-zinc-500">
                             <li className="flex items-center gap-2">
                                 <div className="w-1 h-1 rounded-full bg-zinc-700" />
-                                Confirm <code>php artisan serve</code> is active at port 8000.
+                                Check if the backend server is running.
                             </li>
                             <li className="flex items-center gap-2">
                                 <div className="w-1 h-1 rounded-full bg-zinc-700" />
-                                Check <code>NEXT_PUBLIC_API_URL</code> in <code>.env.local</code>.
+                                Check your internet connection.
                             </li>
                             <li className="flex items-center gap-2">
                                 <div className="w-1 h-1 rounded-full bg-zinc-700" />
-                                Verify <code>config/cors.php</code> allows <code>localhost:3000</code>.
+                                Contact an administrator if the issue persists.
                             </li>
                         </ul>
                     </div>

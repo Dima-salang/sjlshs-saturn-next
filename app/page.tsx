@@ -39,8 +39,8 @@ export default function Home() {
                     transition={{ delay: 0.2 }}
                     className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500"
                 >
-                    Manage Your Educational <br />
-                    Universe in Hub-Time.
+                    The Modern Way to <br />
+                    Manage Your School.
                 </motion.h1>
 
                 <motion.p 
@@ -49,8 +49,8 @@ export default function Home() {
                     transition={{ delay: 0.3 }}
                     className="text-lg md:text-xl text-zinc-500 max-w-2xl mb-12"
                 >
-                    The next-generation attendance and management core for SJLSHS. 
-                    Synchronize students, teachers, and records with zero friction.
+                    The all-in-one platform for attendance and records. 
+                    Sync students, teachers, and logs instantly with zero friction.
                 </motion.p>
 
                 <motion.div 
@@ -62,7 +62,7 @@ export default function Home() {
                     {!loading && user ? (
                         <Button asChild className="h-14 px-8 rounded-full bg-white text-black hover:bg-zinc-200 text-lg font-bold">
                             <Link href="/scan">
-                                Open Scanner
+                                Scan QR Codes
                                 <ArrowRight className="ml-2 w-5 h-5" />
                             </Link>
                         </Button>
@@ -74,26 +74,28 @@ export default function Home() {
                             </Link>
                         </Button>
                     )}
-                    <Button asChild variant="outline" className="h-14 px-8 rounded-full border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900 text-zinc-300 text-lg">
-                        <Link href="/test-api">Access Lab</Link>
-                    </Button>
+                    {user && (
+                        <Button asChild variant="outline" className="h-14 px-8 rounded-full border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900 text-zinc-300 text-lg">
+                            <Link href="/test-api">Developer API</Link>
+                        </Button>
+                    )}
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 text-left">
                     <FeatureCard 
                         icon={<Shield className="w-6 h-6 text-blue-400" />}
                         title="Secure Identity"
-                        description="Powered by WorkOS AuthKit for enterprise-grade security."
+                        description="Professional security powered by industry standards."
                     />
                     <FeatureCard 
                         icon={<Zap className="w-6 h-6 text-purple-400" />}
                         title="Instant Sync"
-                        description="Watch attendance records appear in dashboard in real-time."
+                        description="Attendance records show up on your dashboard in real-time."
                     />
                     <FeatureCard 
                         icon={<Globe className="w-6 h-6 text-indigo-400" />}
-                        title="Orbital Reach"
-                        description="Access your school management dashboard from any planet (or device)."
+                        title="Easy Access"
+                        description="Manage your school records from any device, anywhere."
                     />
                 </div>
             </main>

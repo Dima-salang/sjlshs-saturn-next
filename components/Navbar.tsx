@@ -94,24 +94,30 @@ export function Navbar() {
 
                     {/* Navigation Links */}
                     <div className="hidden md:flex items-center gap-1">
-                        <NavLink href="/scan" icon={<Scan className="w-4 h-4" />}>
-                            Scanner
-                        </NavLink>
-                        <NavLink href="/admin/teachers" icon={<Users className="w-4 h-4" />}>
-                            Educators
-                        </NavLink>
-                        <NavLink href="/admin/sections" icon={<LayoutDashboard className="w-4 h-4" />}>
-                            Sections
-                        </NavLink>
-                        <NavLink href="/admin/students" icon={<Users className="w-4 h-4" />}>
-                            Students
-                        </NavLink>
-                        <NavLink href="/admin/attendance" icon={<Settings className="w-4 h-4" />}>
-                            Logbook
-                        </NavLink>
-                        <NavLink href="/test-api" icon={<Settings className="w-4 h-4" />}>
-                            Lab
-                        </NavLink>
+                        {user && (
+                            <>
+                                <NavLink href="/scan" icon={<Scan className="w-4 h-4" />}>
+                                    Scan QR
+                                </NavLink>
+                                <NavLink href="/admin/teachers" icon={<Users className="w-4 h-4" />}>
+                                    Teachers
+                                </NavLink>
+                                <NavLink href="/admin/sections" icon={<LayoutDashboard className="w-4 h-4" />}>
+                                    Classes
+                                </NavLink>
+                                <NavLink href="/admin/students" icon={<Users className="w-4 h-4" />}>
+                                    Students
+                                </NavLink>
+                                <NavLink href="/admin/attendance" icon={<Settings className="w-4 h-4" />}>
+                                    Attendance
+                                </NavLink>
+                                {user.is_admin && (
+                                    <NavLink href="/test-api" icon={<Settings className="w-4 h-4" />}>
+                                        API Test
+                                    </NavLink>
+                                )}
+                            </>
+                        )}
                     </div>
 
                     {/* User Actions */}

@@ -99,9 +99,9 @@ export default function InactiveAccountPage() {
                         <div className="flex items-start gap-3 pl-2">
                             <Clock className="mt-0.5 h-5 w-5 text-orange-400 shrink-0" />
                             <div className="flex flex-col gap-1">
-                                <span className="text-sm font-semibold tracking-tight text-orange-300">Awaiting Clearance</span>
+                                <span className="text-sm font-semibold tracking-tight text-orange-300">Awaiting Activation</span>
                                 <span className="text-xs text-orange-200/70">
-                                    You created an account as <strong>{user?.name}</strong>. An administrator must explicitly grant you access before you can enter the orbital system.
+                                    You created an account as <strong>{user?.name}</strong>. An administrator must check your account before you can use the app.
                                 </span>
                             </div>
                         </div>
