@@ -49,12 +49,18 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
 
     const logout = async () => {
         try {
-            await api.post('/logout');
+            const response = await api.post('/logout');
+            
+            // If the backend provided a full SSO logout URL (WorkOS), follow it
+            if (response.data?.url) {
+                window.location.href = response.data.url;
+                return;
+            }
         } catch (error) {
             console.error('Logout failed:', error);
         } finally {
             setUser(null);
-            if (typeof window !== 'undefined') {
+            if (typeof window !== 'undefined' && !window.location.search.includes('logout')) {
                 window.location.href = '/login';
             }
         }
