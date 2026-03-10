@@ -1,65 +1,115 @@
-import Image from "next/image";
+'use client';
+
+import { motion } from 'framer-motion';
+import { Shield, Zap, Globe, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    const { user, loading } = useAuth();
+
+    return (
+        <div className="relative min-h-[calc(100vh-64px)] overflow-hidden flex flex-col items-center justify-center font-sans px-4">
+            {/* Background Atmosphere */}
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[#050508]" />
+                <div className="absolute top-[20%] left-[10%] w-[40%] h-[40%] bg-blue-600/5 blur-[120px] rounded-full" />
+                <div className="absolute bottom-[20%] right-[10%] w-[40%] h-[40%] bg-purple-600/5 blur-[120px] rounded-full" />
+                
+                {/* Orbital Rings */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] border border-zinc-800/30 rounded-[100%] rotate-[-15deg]" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[400px] border border-zinc-800/10 rounded-[100%] rotate-[-15deg]" />
+            </div>
+
+            <main className="relative z-10 max-w-5xl mx-auto text-center py-20 flex flex-col items-center">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1 }}
+                    className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 mb-8"
+                >
+                    <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-400 font-medium">Saturn V1.0 - Live Intelligence</span>
+                </motion.div>
+
+                <motion.h1 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500"
+                >
+                    Manage Your Educational <br />
+                    Universe in Hub-Time.
+                </motion.h1>
+
+                <motion.p 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-lg md:text-xl text-zinc-500 max-w-2xl mb-12"
+                >
+                    The next-generation attendance and management core for SJLSHS. 
+                    Synchronize students, teachers, and records with zero friction.
+                </motion.p>
+
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="flex flex-col sm:flex-row gap-4"
+                >
+                    {!loading && user ? (
+                        <Button asChild className="h-14 px-8 rounded-full bg-white text-black hover:bg-zinc-200 text-lg font-bold">
+                            <Link href="/scan">
+                                Open Scanner
+                                <ArrowRight className="ml-2 w-5 h-5" />
+                            </Link>
+                        </Button>
+                    ) : (
+                        <Button asChild className="h-14 px-8 rounded-full bg-white text-black hover:bg-zinc-200 text-lg font-bold">
+                            <Link href="/login">
+                                Get Started
+                                <ArrowRight className="ml-2 w-5 h-5" />
+                            </Link>
+                        </Button>
+                    )}
+                    <Button asChild variant="outline" className="h-14 px-8 rounded-full border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900 text-zinc-300 text-lg">
+                        <Link href="/test-api">Access Lab</Link>
+                    </Button>
+                </motion.div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 text-left">
+                    <FeatureCard 
+                        icon={<Shield className="w-6 h-6 text-blue-400" />}
+                        title="Secure Identity"
+                        description="Powered by WorkOS AuthKit for enterprise-grade security."
+                    />
+                    <FeatureCard 
+                        icon={<Zap className="w-6 h-6 text-purple-400" />}
+                        title="Instant Sync"
+                        description="Watch attendance records appear in dashboard in real-time."
+                    />
+                    <FeatureCard 
+                        icon={<Globe className="w-6 h-6 text-indigo-400" />}
+                        title="Orbital Reach"
+                        description="Access your school management dashboard from any planet (or device)."
+                    />
+                </div>
+            </main>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    );
+}
+
+function FeatureCard({ icon, title, description }: Readonly<{ icon: React.ReactNode, title: string, description: string }>) {
+    return (
+        <motion.div 
+            whileHover={{ y: -5 }}
+            className="p-6 rounded-2xl bg-zinc-900/30 border border-zinc-800/50 backdrop-blur-sm"
+        >
+            <div className="mb-4">{icon}</div>
+            <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+            <p className="text-sm text-zinc-500 leading-relaxed">{description}</p>
+        </motion.div>
+    );
 }
