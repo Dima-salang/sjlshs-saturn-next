@@ -19,6 +19,16 @@ api.interceptors.response.use(
       console.warn("Unauthorized access detected");
     }
 
+    if (error.response?.status === 403 && error.response?.data?.inactive) {
+      // Automatically route to the inactive screen when backend blocks an inactive user
+      if (
+        typeof window !== "undefined" &&
+        window.location.pathname !== "/inactive"
+      ) {
+        window.location.href = "/inactive";
+      }
+    }
+
     if (error.response?.status === 419) {
       // CSRF Token mismatch - session might have expired
       console.error("Session/CSRF expired");
