@@ -26,7 +26,15 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
 
     const fetchUser = useCallback(async () => {
         try {
+            console.log('[AuthContext] Initializing CSRF and fetching user...');
+            
+            // In cross-domain production, we MUST hit the CSRF endpoint first 
+            // to establish the session handshake, even for GET requests.
+            await api.get('/sanctum/csrf-cookie');
+            
             const response = await api.get('/api/me');
+            console.log('[AuthContext] User response:', response.data);
+            
             if (response.data.authenticated) {
                 setUser(response.data);
             } else {
@@ -34,9 +42,10 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
             }
         } catch (error: any) {
             if (error.response?.status === 401) {
+                console.log('[AuthContext] 401: Unauthorized');
                 setUser(null);
             } else {
-                console.error('Failed to fetch user:', error);
+                console.error('[AuthContext] Error:', error);
             }
         } finally {
             setLoading(false);
