@@ -48,22 +48,29 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
     }, [fetchUser]);
 
     const logout = async () => {
+        setUser(null);
         try {
-            const response = await api.post('/logout');
-            
-            // If the backend provided a full SSO logout URL (WorkOS), follow it
+            // Use /api/logout (not /logout) — the API route returns JSON with the WorkOS logout URL.
+            // The web /logout route returns a raw redirect which axios can't use for page navigation.
+            const response = await api.post('/api/logout');
+
+            console.log('[logout] response:', response.data);
+
+            // If the backend provided a full SSO logout URL (WorkOS), navigate the browser to it.
+            // This ends the WorkOS session so the user gets the account picker on next login.
             if (response.data?.url) {
+                console.log('[logout] redirecting to WorkOS logout URL:', response.data.url);
                 window.location.href = response.data.url;
                 return;
             }
+
+            console.warn('[logout] no WorkOS URL returned, falling back to /login');
         } catch (error) {
-            console.error('Logout failed:', error);
-        } finally {
-            setUser(null);
-            if (typeof window !== 'undefined' && !window.location.search.includes('logout')) {
-                window.location.href = '/login';
-            }
+            console.error('[logout] failed:', error);
         }
+
+        // Fallback: no SSO URL, just go to login
+        window.location.href = '/login';
     };
 
     const value = useMemo(() => ({
