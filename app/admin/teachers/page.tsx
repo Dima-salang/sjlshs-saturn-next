@@ -223,11 +223,11 @@ export default function TeachersPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-900/20 backdrop-blur-md overflow-hidden"
+                    className="rounded-2xl border border-border bg-card/50 backdrop-blur-md overflow-hidden"
                 >
                     <Table>
                         <TableHeader>
-                            <TableRow className="border-zinc-800 hover:bg-transparent">
+                            <TableRow className="border-border hover:bg-transparent bg-muted/30">
                                 <TableHead className="w-[300px]">Teacher Name</TableHead>
                                 <TableHead>Status</TableHead>
                                 <TableHead>Advisory Section</TableHead>
@@ -238,12 +238,12 @@ export default function TeachersPage() {
                         <TableBody>
                             {loading && (
                                 [0, 1, 2, 3, 4].map((i) => (
-                                    <TableRow key={`skeleton-${i}`} className="border-zinc-800 animate-pulse">
-                                        <TableCell><div className="h-10 w-48 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                        <TableCell><div className="h-6 w-20 bg-zinc-800/50 rounded-full" /></TableCell>
-                                        <TableCell><div className="h-6 w-32 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                        <TableCell><div className="h-6 w-24 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                        <TableCell className="text-right"><div className="h-8 w-8 bg-zinc-800/50 rounded-full ml-auto" /></TableCell>
+                                    <TableRow key={`skeleton-${i}`} className="border-border animate-pulse">
+                                        <TableCell><div className="h-10 w-48 bg-muted rounded-lg" /></TableCell>
+                                        <TableCell><div className="h-6 w-20 bg-muted rounded-full" /></TableCell>
+                                        <TableCell><div className="h-6 w-32 bg-muted rounded-lg" /></TableCell>
+                                        <TableCell><div className="h-6 w-24 bg-muted rounded-lg" /></TableCell>
+                                        <TableCell className="text-right"><div className="h-8 w-8 bg-muted rounded-full ml-auto" /></TableCell>
                                     </TableRow>
                                 ))
                             )}
@@ -257,7 +257,7 @@ export default function TeachersPage() {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0, x: -20 }}
-                                            className="group border-zinc-800 hover:bg-zinc-800/30 transition-colors"
+                                            className="group border-border hover:bg-muted/50 transition-colors"
                                         >
                                             <TableCell>
                                                 <div className="flex items-center gap-3">
@@ -295,22 +295,22 @@ export default function TeachersPage() {
                                                     )}
                                                 </Badge>
                                             </TableCell>
-                                            <TableCell className="text-zinc-300 font-mono text-xs text-center">
+                                            <TableCell className="text-foreground font-mono text-xs text-center">
                                                 {teacher.section_name ? (
-                                                    <Badge variant="outline" className="border-zinc-800 text-zinc-400 font-mono">
+                                                    <Badge variant="outline" className="border-border text-muted-foreground font-mono">
                                                         {teacher.section_name}
                                                     </Badge>
                                                 ) : (
-                                                    <span className="text-zinc-700">None</span>
+                                                    <span className="text-muted-foreground/40">None</span>
                                                 )}
                                             </TableCell>
-                                            <TableCell className="text-zinc-500 text-xs">
+                                            <TableCell className="text-muted-foreground text-xs">
                                                 {new Date(teacher.created_at).toLocaleDateString()}
                                             </TableCell>
                                             <TableCell className="text-right">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="text-zinc-500 hover:text-white hover:bg-zinc-700 rounded-full">
+                                                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-full">
                                                             <MoreVertical className="w-4 h-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>
@@ -340,8 +340,8 @@ export default function TeachersPage() {
                             {!loading && filteredTeachers.length === 0 && (
                                 <TableRow>
                                     <TableCell colSpan={5} className="h-64 text-center">
-                                        <div className="flex flex-col items-center text-zinc-600">
-                                            <Users className="w-12 h-12 mb-4 opacity-10" />
+                                        <div className="flex flex-col items-center text-muted-foreground">
+                                            <Users className="w-12 h-12 mb-4 opacity-20" />
                                             <p>No teachers found matching your criteria.</p>
                                         </div>
                                     </TableCell>

@@ -331,7 +331,7 @@ export default function StudentsPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-900/20 backdrop-blur-md overflow-hidden shadow-2xl"
+                    className="rounded-2xl border border-border bg-card/50 backdrop-blur-md overflow-hidden shadow-2xl"
                 >
                     <div className="overflow-x-auto">
                         <Table>
@@ -348,13 +348,13 @@ export default function StudentsPage() {
                             <TableBody>
                                 {loading && (
                                     [0, 1, 2, 3, 4].map((i) => (
-                                        <TableRow key={`skeleton-${i}`} className="border-border animate-pulse">
-                                            <TableCell><div className="h-10 w-48 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                            <TableCell><div className="h-6 w-24 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                            <TableCell><div className="h-6 w-20 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                            <TableCell><div className="h-6 w-12 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                            <TableCell><div className="h-6 w-16 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                            <TableCell className="text-right"><div className="h-8 w-8 bg-zinc-800/50 rounded-full ml-auto" /></TableCell>
+                                    <TableRow key={`skeleton-${i}`} className="border-border animate-pulse">
+                                            <TableCell><div className="h-10 w-48 bg-muted rounded-lg" /></TableCell>
+                                            <TableCell><div className="h-6 w-24 bg-muted rounded-lg" /></TableCell>
+                                            <TableCell><div className="h-6 w-20 bg-muted rounded-lg" /></TableCell>
+                                            <TableCell><div className="h-6 w-12 bg-muted rounded-lg" /></TableCell>
+                                            <TableCell><div className="h-6 w-16 bg-muted rounded-lg" /></TableCell>
+                                            <TableCell className="text-right"><div className="h-8 w-8 bg-muted rounded-full ml-auto" /></TableCell>
                                         </TableRow>
                                     ))
                                 )}
@@ -363,7 +363,7 @@ export default function StudentsPage() {
                                     <AnimatePresence mode="popLayout">
                                         {filteredStudents.map((student) => (
                                             <motion.tr 
-                                                className="group border-border hover:bg-muted/30 transition-colors"
+                                                className="group border-border hover:bg-muted/50 transition-colors"
                                             >
                                                 <TableCell className="py-4">
                                                     <div className="flex items-center gap-3">
@@ -393,7 +393,7 @@ export default function StudentsPage() {
                                                 <TableCell className="text-right px-6">
                                                     <DropdownMenu>
                                                         <DropdownMenuTrigger asChild>
-                                                            <Button variant="ghost" size="icon" className="text-zinc-500 hover:text-white hover:bg-zinc-700 rounded-full">
+                                                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-full">
                                                                 <MoreVertical className="w-4 h-4" />
                                                             </Button>
                                                         </DropdownMenuTrigger>
@@ -624,7 +624,7 @@ export default function StudentsPage() {
 
             {/* Bulk Import Modal */}
             <Dialog open={isImporting} onOpenChange={setIsImporting}>
-                <DialogContent className="bg-[#0a0a0f] border-zinc-800 text-zinc-100 max-w-md rounded-3xl overflow-hidden shadow-2xl">
+                <DialogContent className="bg-card border-border text-card-foreground max-w-md rounded-3xl overflow-hidden shadow-2xl">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
                     
                     <DialogHeader>
@@ -632,7 +632,7 @@ export default function StudentsPage() {
                             <FileSpreadsheet className="w-6 h-6 text-blue-400" />
                             Bulk Student Import
                         </DialogTitle>
-                        <DialogDescription className="text-zinc-500">
+                        <DialogDescription className="text-muted-foreground">
                             Upload a CSV file to mass-import students into the system.
                         </DialogDescription>
                     </DialogHeader>
@@ -650,7 +650,7 @@ export default function StudentsPage() {
                             tabIndex={0}
                             className={cn(
                                 "border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center gap-4 cursor-pointer transition-all focus:outline-none focus:ring-2 focus:ring-blue-500",
-                                importFile ? "border-emerald-500/50 bg-emerald-500/5" : "border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900/50"
+                                importFile ? "border-emerald-500/50 bg-emerald-500/5" : "border-border hover:border-muted-foreground/40 hover:bg-muted/50"
                             )}
                         >
                             <input 
@@ -665,8 +665,8 @@ export default function StudentsPage() {
                                 <>
                                     <CheckCircle2 className="w-12 h-12 text-emerald-400 animate-in zoom-in duration-300" />
                                     <div className="text-center">
-                                        <div className="font-semibold text-zinc-100">{importFile.name}</div>
-                                        <div className="text-xs text-zinc-500">{(importFile.size / 1024).toFixed(2)} KB</div>
+                                        <div className="font-semibold text-foreground">{importFile.name}</div>
+                                        <div className="text-xs text-muted-foreground">{(importFile.size / 1024).toFixed(2)} KB</div>
                                     </div>
                                     <Button 
                                         variant="ghost" 
@@ -682,22 +682,22 @@ export default function StudentsPage() {
                                 </>
                             ) : (
                                 <>
-                                    <div className="w-16 h-16 rounded-full bg-zinc-900 flex items-center justify-center">
-                                        <Download className="w-8 h-8 text-zinc-600" />
+                                    <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+                                        <Download className="w-8 h-8 text-muted-foreground" />
                                     </div>
                                     <div className="text-center">
-                                        <div className="font-medium text-zinc-300">Drop your CSV here</div>
-                                        <div className="text-xs text-zinc-600 mt-1">Maximum file size: 5MB</div>
+                                        <div className="font-medium text-foreground">Drop your CSV here</div>
+                                        <div className="text-xs text-muted-foreground mt-1">Maximum file size: 5MB</div>
                                     </div>
                                 </>
                             )}
                         </div>
 
-                        <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 flex gap-3">
-                            <AlertCircle className="w-5 h-5 text-zinc-500 shrink-0 mt-0.5" />
+                        <div className="bg-muted/50 border border-border rounded-2xl p-4 flex gap-3">
+                            <AlertCircle className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
                             <div className="space-y-2">
-                                <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider">CSV Headers Required</div>
-                                <div className="text-[10px] font-mono text-zinc-600 leading-relaxed">
+                                <div className="text-xs font-bold text-foreground uppercase tracking-wider">CSV Headers Required</div>
+                                <div className="text-[10px] font-mono text-muted-foreground leading-relaxed">
                                     lrn, first_name, last_name, middle_name, section_id, gender, grade_level, adviser_id
                                 </div>
                                 <button 

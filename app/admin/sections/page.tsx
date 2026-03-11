@@ -238,11 +238,11 @@ export default function SectionsPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="rounded-2xl border border-zinc-800 bg-zinc-900/20 backdrop-blur-md overflow-hidden shadow-2xl"
+                    className="rounded-2xl border border-border bg-card/50 backdrop-blur-md overflow-hidden shadow-2xl"
                 >
                     <Table>
                         <TableHeader>
-                            <TableRow className="border-zinc-800 hover:bg-transparent bg-zinc-900/50">
+                            <TableRow className="border-border hover:bg-transparent bg-muted/30">
                                 <TableHead className="py-4">Section Name</TableHead>
                                 <TableHead>Grade Level</TableHead>
                                 <TableHead>Adviser</TableHead>
@@ -252,11 +252,11 @@ export default function SectionsPage() {
                         <TableBody>
                             {loading && (
                                 [0, 1, 2, 3].map((i) => (
-                                    <TableRow key={`skeleton-${i}`} className="border-zinc-800 animate-pulse">
-                                        <TableCell><div className="h-6 w-32 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                        <TableCell><div className="h-6 w-16 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                        <TableCell><div className="h-6 w-48 bg-zinc-800/50 rounded-lg" /></TableCell>
-                                        <TableCell className="text-right"><div className="h-8 w-8 bg-zinc-800/50 rounded-full ml-auto" /></TableCell>
+                                    <TableRow key={`skeleton-${i}`} className="border-border animate-pulse">
+                                        <TableCell><div className="h-6 w-32 bg-muted rounded-lg" /></TableCell>
+                                        <TableCell><div className="h-6 w-16 bg-muted rounded-lg" /></TableCell>
+                                        <TableCell><div className="h-6 w-48 bg-muted rounded-lg" /></TableCell>
+                                        <TableCell className="text-right"><div className="h-8 w-8 bg-muted rounded-full ml-auto" /></TableCell>
                                     </TableRow>
                                 ))
                             )}
@@ -270,7 +270,7 @@ export default function SectionsPage() {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0, x: -20 }}
-                                            className="group border-zinc-800 hover:bg-zinc-800/30 transition-colors"
+                                            className="group border-border hover:bg-muted/50 transition-colors"
                                         >
                                             <TableCell className="py-4">
                                                 <div className="flex items-center gap-3">
@@ -281,7 +281,7 @@ export default function SectionsPage() {
                                                 </div>
                                             </TableCell>
                                             <TableCell>
-                                                <div className="px-2.5 py-0.5 rounded-full bg-zinc-800 border border-zinc-700 text-xs font-medium inline-block">
+                                                <div className="px-2.5 py-0.5 rounded-full bg-muted border border-border text-xs font-medium inline-block text-foreground">
                                                     Grade {section.grade_level}
                                                 </div>
                                             </TableCell>
@@ -293,7 +293,7 @@ export default function SectionsPage() {
                                             <TableCell className="text-right px-6">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="text-zinc-500 hover:text-white hover:bg-zinc-700 rounded-full">
+                                                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-full">
                                                             <MoreVertical className="w-4 h-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>

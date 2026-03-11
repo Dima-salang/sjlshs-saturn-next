@@ -299,7 +299,7 @@ export default function AttendanceAdminPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="rounded-[2.5rem] border border-zinc-800/50 bg-zinc-900/10 backdrop-blur-2xl overflow-hidden shadow-2xl relative"
+                    className="rounded-[2.5rem] border border-border bg-card/50 backdrop-blur-2xl overflow-hidden shadow-2xl relative"
                 >
                     <Table>
                         <TableHeader>
@@ -313,10 +313,10 @@ export default function AttendanceAdminPage() {
                         <TableBody>
                             {loading ? (
                                 [0, 1, 2, 3, 4].map((i) => (
-                                    <TableRow key={`skeleton-${i}`} className="border-zinc-800/30 animate-pulse h-20">
-                                        <TableCell className="pl-8"><div className="h-4 w-32 bg-zinc-800 rounded-full" /></TableCell>
-                                        <TableCell><div className="h-4 w-48 bg-zinc-800 rounded-full" /></TableCell>
-                                        <TableCell><div className="h-6 w-24 bg-zinc-800 rounded-full" /></TableCell>
+                                    <TableRow key={`skeleton-${i}`} className="border-border animate-pulse h-20">
+                                        <TableCell className="pl-8"><div className="h-4 w-32 bg-muted rounded-full" /></TableCell>
+                                        <TableCell><div className="h-4 w-48 bg-muted rounded-full" /></TableCell>
+                                        <TableCell><div className="h-6 w-24 bg-muted rounded-full" /></TableCell>
                                         <TableCell />
                                     </TableRow>
                                 ))
@@ -324,10 +324,10 @@ export default function AttendanceAdminPage() {
                                 <TableRow>
                                     <TableCell colSpan={4} className="h-64 text-center">
                                         <div className="flex flex-col items-center justify-center gap-3">
-                                            <div className="w-16 h-16 rounded-full bg-zinc-900 flex items-center justify-center mb-2">
-                                                <Search className="w-6 h-6 text-zinc-700" />
+                                            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-2">
+                                                <Search className="w-6 h-6 text-muted-foreground" />
                                             </div>
-                                            <p className="text-zinc-500 font-medium">No records found for current criteria.</p>
+                                            <p className="text-muted-foreground font-medium">No records found for current criteria.</p>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -339,7 +339,7 @@ export default function AttendanceAdminPage() {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0, scale: 0.98 }}
-                                            className="group border-border/30 hover:bg-muted/30 transition-colors h-20"
+                                            className="group border-border/50 hover:bg-muted/30 transition-colors h-20"
                                         >
                                             <TableCell className="pl-8">
                                                 <div className="flex flex-col">
@@ -383,7 +383,7 @@ export default function AttendanceAdminPage() {
                                                             On Time
                                                         </Badge>
                                                     )}
-                                                    <div className="px-2 py-0.5 rounded-md border border-zinc-800 text-[9px] text-zinc-500 font-black tracking-widest uppercase">
+                                                    <div className="px-2 py-0.5 rounded-md border border-border text-[9px] text-muted-foreground font-black tracking-widest uppercase">
                                                         {sections.find(s => s.section_id === record.section_id)?.section_name || '??'}
                                                     </div>
                                                 </div>
@@ -391,7 +391,7 @@ export default function AttendanceAdminPage() {
                                             <TableCell className="text-right pr-8">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="text-zinc-600 hover:text-white hover:bg-zinc-800 transition-all rounded-xl">
+                                                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all rounded-xl">
                                                             <MoreVertical className="w-4 h-4" />
                                                         </Button>
                                                     </DropdownMenuTrigger>

@@ -43,15 +43,6 @@ export function Navbar() {
                         </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator className="bg-border" />
-                    <DropdownMenuItem className="hover:bg-accent cursor-pointer group">
-                        <User className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-foreground" />
-                        <span>Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="hover:bg-accent cursor-pointer group">
-                        <Settings className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-foreground" />
-                        <span>Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-border" />
                     <DropdownMenuItem 
                         onClick={() => logout()}
                         className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer group"
