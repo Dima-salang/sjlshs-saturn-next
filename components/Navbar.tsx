@@ -97,12 +97,16 @@ export function Navbar() {
                                 <NavLink href="/scan" icon={<Scan className="w-4 h-4" />}>
                                     Scan QR
                                 </NavLink>
-                                <NavLink href="/admin/teachers" icon={<Users className="w-4 h-4" />}>
-                                    Teachers
-                                </NavLink>
-                                <NavLink href="/admin/sections" icon={<LayoutDashboard className="w-4 h-4" />}>
-                                    Classes
-                                </NavLink>
+                                {user.is_admin && (
+                                    <>
+                                        <NavLink href="/admin/teachers" icon={<Users className="w-4 h-4" />}>
+                                            Teachers
+                                        </NavLink>
+                                        <NavLink href="/admin/sections" icon={<LayoutDashboard className="w-4 h-4" />}>
+                                            Classes
+                                        </NavLink>
+                                    </>
+                                )}
                                 <NavLink href="/admin/students" icon={<Users className="w-4 h-4" />}>
                                     Students
                                 </NavLink>

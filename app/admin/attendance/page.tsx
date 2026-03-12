@@ -75,7 +75,10 @@ interface AttendanceRecord {
     created_at: string;
 }
 
+import { useAuth } from '@/context/AuthContext';
+
 export default function AttendanceAdminPage() {
+    const { user } = useAuth();
     const [records, setRecords] = useState<AttendanceRecord[]>([]);
     const [sections, setSections] = useState<Section[]>([]);
     const [loading, setLoading] = useState(true);
@@ -207,28 +210,47 @@ export default function AttendanceAdminPage() {
                         </motion.p>
                     </div>
 
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="flex items-center gap-3"
-                    >
-                        <Button 
-                            variant="outline" 
-                            size="icon" 
-                            onClick={fetchData}
-                            disabled={loading}
-                            className="rounded-2xl border-border bg-muted/50 hover:bg-muted text-muted-foreground h-12 w-12"
+                    {user?.is_admin && (
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="flex items-center gap-3"
                         >
-                            <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
-                        </Button>
-                        <Button 
-                            onClick={() => setIsCreating(true)}
-                            className="rounded-2xl bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black hover:bg-emerald-500 dark:hover:bg-emerald-400 font-bold px-8 h-12 shadow-lg shadow-emerald-500/20"
-                        >
-                            <Plus className="w-4 h-4 mr-2" />
-                            Manual Entry
-                        </Button>
-                    </motion.div>
+                            <Button 
+                                variant="outline" 
+                                size="icon" 
+                                onClick={fetchData}
+                                disabled={loading}
+                                className="rounded-2xl border-border bg-muted/50 hover:bg-muted text-muted-foreground h-12 w-12"
+                            >
+                                <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
+                            </Button>
+                            <Button 
+                                onClick={() => setIsCreating(true)}
+                                className="rounded-2xl bg-emerald-600 dark:bg-emerald-500 text-white dark:text-black hover:bg-emerald-500 dark:hover:bg-emerald-400 font-bold px-8 h-12 shadow-lg shadow-emerald-500/20"
+                            >
+                                <Plus className="w-4 h-4 mr-2" />
+                                Manual Entry
+                            </Button>
+                        </motion.div>
+                    )}
+                    {!user?.is_admin && (
+                         <motion.div 
+                         initial={{ opacity: 0, scale: 0.95 }}
+                         animate={{ opacity: 1, scale: 1 }}
+                         className="flex items-center gap-3"
+                     >
+                         <Button 
+                             variant="outline" 
+                             size="icon" 
+                             onClick={fetchData}
+                             disabled={loading}
+                             className="rounded-2xl border-border bg-muted/50 hover:bg-muted text-muted-foreground h-12 w-12"
+                         >
+                             <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
+                         </Button>
+                     </motion.div>
+                    )}
                 </div>
 
                 {/* Statistics Grid */}
@@ -274,24 +296,26 @@ export default function AttendanceAdminPage() {
                         />
                     </div>
                     
-                    <div className="flex items-center gap-3 w-full md:w-auto">
-                        <Select value={sectionFilter} onValueChange={setSectionFilter}>
-                            <SelectTrigger className="w-full md:w-48 h-14 bg-muted/20 border-border/80 rounded-2xl text-foreground">
-                                <div className="flex items-center gap-2">
-                                    <Filter className="w-3.5 h-3.5 text-muted-foreground" />
-                                    <SelectValue placeholder="All Sections" />
-                                </div>
-                            </SelectTrigger>
-                            <SelectContent className="bg-popover border-border text-popover-foreground">
-                                <SelectItem value="all">All Sections</SelectItem>
-                                {sections.map(s => (
-                                    <SelectItem key={s.section_id} value={s.section_id.toString()}>
-                                        {s.section_name}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                    {user?.is_admin && (
+                        <div className="flex items-center gap-3 w-full md:w-auto">
+                            <Select value={sectionFilter} onValueChange={setSectionFilter}>
+                                <SelectTrigger className="w-full md:w-48 h-14 bg-muted/20 border-border/80 rounded-2xl text-foreground">
+                                    <div className="flex items-center gap-2">
+                                        <Filter className="w-3.5 h-3.5 text-muted-foreground" />
+                                        <SelectValue placeholder="All Sections" />
+                                    </div>
+                                </SelectTrigger>
+                                <SelectContent className="bg-popover border-border text-popover-foreground">
+                                    <SelectItem value="all">All Sections</SelectItem>
+                                    {sections.map(s => (
+                                        <SelectItem key={s.section_id} value={s.section_id.toString()}>
+                                            {s.section_name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    )}
                 </div>
 
                 {/* Manifest Table */}
@@ -307,7 +331,7 @@ export default function AttendanceAdminPage() {
                                 <TableHead className="pl-8 text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Time & Date</TableHead>
                                 <TableHead className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Student</TableHead>
                                 <TableHead className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Status</TableHead>
-                                <TableHead className="text-right pr-8 text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Actions</TableHead>
+                                {user?.is_admin && <TableHead className="text-right pr-8 text-muted-foreground font-bold text-[10px] uppercase tracking-widest">Actions</TableHead>}
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -388,31 +412,33 @@ export default function AttendanceAdminPage() {
                                                     </div>
                                                 </div>
                                             </TableCell>
-                                            <TableCell className="text-right pr-8">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all rounded-xl">
-                                                            <MoreVertical className="w-4 h-4" />
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-2xl min-w-[160px] p-2">
-                                                        <DropdownMenuItem 
-                                                            onClick={() => setEditingRecord(record)}
-                                                            className="cursor-pointer rounded-xl h-10 gap-2"
-                                                        >
-                                                            <Edit2 className="w-3.5 h-3.5" />
-                                                            Edit Record
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem 
-                                                            onClick={() => handleDeleteRecord(record.id)}
-                                                            className="text-destructive cursor-pointer rounded-xl h-10 gap-2 focus:text-destructive"
-                                                        >
-                                                            <Trash2 className="w-3.5 h-3.5" />
-                                                            Delete Record
-                                                        </DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </TableCell>
+                                            {user?.is_admin && (
+                                                <TableCell className="text-right pr-8">
+                                                    <DropdownMenu>
+                                                        <DropdownMenuTrigger asChild>
+                                                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted transition-all rounded-xl">
+                                                                <MoreVertical className="w-4 h-4" />
+                                                            </Button>
+                                                        </DropdownMenuTrigger>
+                                                        <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-2xl min-w-[160px] p-2">
+                                                            <DropdownMenuItem 
+                                                                onClick={() => setEditingRecord(record)}
+                                                                className="cursor-pointer rounded-xl h-10 gap-2"
+                                                            >
+                                                                <Edit2 className="w-3.5 h-3.5" />
+                                                                Edit Record
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem 
+                                                                onClick={() => handleDeleteRecord(record.id)}
+                                                                className="text-destructive cursor-pointer rounded-xl h-10 gap-2 focus:text-destructive"
+                                                            >
+                                                                <Trash2 className="w-3.5 h-3.5" />
+                                                                Delete Record
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuContent>
+                                                    </DropdownMenu>
+                                                </TableCell>
+                                            )}
                                         </motion.tr>
                                     ))}
                                 </AnimatePresence>

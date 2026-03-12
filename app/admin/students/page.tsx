@@ -78,7 +78,10 @@ interface Student {
     section?: Section;
 }
 
+import { useAuth } from '@/context/AuthContext';
+
 export default function StudentsPage() {
+    const { user } = useAuth();
     const [students, setStudents] = useState<Student[]>([]);
     const [sections, setSections] = useState<Section[]>([]);
     const [teachers, setTeachers] = useState<Teacher[]>([]);
@@ -275,36 +278,55 @@ export default function StudentsPage() {
                         </motion.p>
                     </div>
 
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="flex items-center gap-3"
-                    >
-                        <Button 
-                            variant="outline" 
-                            size="icon" 
-                            onClick={fetchData}
-                            disabled={loading}
-                            className="rounded-full border-border bg-muted/50 hover:bg-muted text-muted-foreground"
+                    {user?.is_admin && (
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="flex items-center gap-3"
                         >
-                            <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
-                        </Button>
-                        <Button 
-                            variant="outline"
-                            onClick={() => setIsImporting(true)}
-                            className="rounded-full border-border bg-muted/50 hover:bg-muted text-foreground px-6"
-                        >
-                            <Upload className="w-4 h-4 mr-2" />
-                            Bulk Import
-                        </Button>
-                        <Button 
-                            onClick={() => setIsCreating(true)}
-                            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6 shadow-lg shadow-primary/20"
-                        >
-                            <UserPlus className="w-4 h-4 mr-2" />
-                            Add Student
-                        </Button>
-                    </motion.div>
+                            <Button 
+                                variant="outline" 
+                                size="icon" 
+                                onClick={fetchData}
+                                disabled={loading}
+                                className="rounded-full border-border bg-muted/50 hover:bg-muted text-muted-foreground"
+                            >
+                                <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
+                            </Button>
+                            <Button 
+                                variant="outline"
+                                onClick={() => setIsImporting(true)}
+                                className="rounded-full border-border bg-muted/50 hover:bg-muted text-foreground px-6"
+                            >
+                                <Upload className="w-4 h-4 mr-2" />
+                                Bulk Import
+                            </Button>
+                            <Button 
+                                onClick={() => setIsCreating(true)}
+                                className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6 shadow-lg shadow-primary/20"
+                            >
+                                <UserPlus className="w-4 h-4 mr-2" />
+                                Add Student
+                            </Button>
+                        </motion.div>
+                    )}
+                    {!user?.is_admin && (
+                         <motion.div 
+                         initial={{ opacity: 0, scale: 0.95 }}
+                         animate={{ opacity: 1, scale: 1 }}
+                         className="flex items-center gap-3"
+                     >
+                         <Button 
+                             variant="outline" 
+                             size="icon" 
+                             onClick={fetchData}
+                             disabled={loading}
+                             className="rounded-full border-border bg-muted/50 hover:bg-muted text-muted-foreground"
+                         >
+                             <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
+                         </Button>
+                     </motion.div>
+                    )}
                 </div>
 
                 {/* Search & Stats */}
@@ -342,7 +364,7 @@ export default function StudentsPage() {
                                     <TableHead className="text-muted-foreground">Section</TableHead>
                                     <TableHead className="text-muted-foreground">Level</TableHead>
                                     <TableHead className="text-muted-foreground">Gender</TableHead>
-                                    <TableHead className="text-right px-6 text-muted-foreground">Actions</TableHead>
+                                    {user?.is_admin && <TableHead className="text-right px-6 text-muted-foreground">Actions</TableHead>}
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -390,31 +412,33 @@ export default function StudentsPage() {
                                                 <TableCell className="text-muted-foreground text-xs uppercase">
                                                     {student.gender}
                                                 </TableCell>
-                                                <TableCell className="text-right px-6">
-                                                    <DropdownMenu>
-                                                        <DropdownMenuTrigger asChild>
-                                                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-full">
-                                                                <MoreVertical className="w-4 h-4" />
-                                                            </Button>
-                                                        </DropdownMenuTrigger>
-                                                        <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-xl min-w-[160px] p-2">
-                                                            <DropdownMenuItem 
-                                                                onClick={() => setEditingStudent(student)}
-                                                                className="cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors"
-                                                            >
-                                                                <Edit2 className="w-4 h-4 mr-2 text-emerald-600 dark:text-emerald-400" />
-                                                                Edit Profile
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem 
-                                                                onClick={() => handleDeleteStudent(student.lrn)}
-                                                                className="text-destructive cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors focus:text-destructive"
-                                                            >
-                                                                <Trash2 className="w-4 h-4 mr-2" />
-                                                                Decommission
-                                                            </DropdownMenuItem>
-                                                        </DropdownMenuContent>
-                                                    </DropdownMenu>
-                                                </TableCell>
+                                                {user?.is_admin && (
+                                                    <TableCell className="text-right px-6">
+                                                        <DropdownMenu>
+                                                            <DropdownMenuTrigger asChild>
+                                                                <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-full">
+                                                                    <MoreVertical className="w-4 h-4" />
+                                                                </Button>
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent align="end" className="bg-popover border-border text-popover-foreground rounded-xl min-w-[160px] p-2">
+                                                                <DropdownMenuItem 
+                                                                    onClick={() => setEditingStudent(student)}
+                                                                    className="cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors"
+                                                                >
+                                                                    <Edit2 className="w-4 h-4 mr-2 text-emerald-600 dark:text-emerald-400" />
+                                                                    Edit Profile
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem 
+                                                                    onClick={() => handleDeleteStudent(student.lrn)}
+                                                                    className="text-destructive cursor-pointer rounded-lg px-3 py-2.5 h-auto transition-colors focus:text-destructive"
+                                                                >
+                                                                    <Trash2 className="w-4 h-4 mr-2" />
+                                                                    Decommission
+                                                                </DropdownMenuItem>
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
+                                                    </TableCell>
+                                                )}
                                             </motion.tr>
                                         ))}
                                     </AnimatePresence>
