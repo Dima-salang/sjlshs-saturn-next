@@ -83,11 +83,7 @@ export default function Home() {
                             </Link>
                         </Button>
                     )}
-                    {user && (
-                        <Button asChild variant="outline" className="h-14 px-8 rounded-full border-border bg-background/50 hover:bg-accent text-foreground text-lg">
-                            <Link href="/test-api">Developer API</Link>
-                        </Button>
-                    )}
+
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-24 text-left">

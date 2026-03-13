@@ -194,10 +194,10 @@ export default function TeachersPage() {
                             >
                                 <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
                             </Button>
-                            <Button className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6">
+                            {/* <Button className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6">
                                 <UserPlus className="w-4 h-4 mr-2" />
                                 Invite Teacher
-                            </Button>
+                            </Button> */}
                         </motion.div>
                     </div>
 

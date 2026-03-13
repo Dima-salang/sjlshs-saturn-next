@@ -113,11 +113,7 @@ export function Navbar() {
                                 <NavLink href="/admin/attendance" icon={<Settings className="w-4 h-4" />}>
                                     Attendance
                                 </NavLink>
-                                {user.is_admin && (
-                                    <NavLink href="/test-api" icon={<Settings className="w-4 h-4" />}>
-                                        API Test
-                                    </NavLink>
-                                )}
+
                             </>
                         )}
                     </div>
